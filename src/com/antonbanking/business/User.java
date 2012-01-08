@@ -3,11 +3,9 @@ package com.antonbanking.business;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.antonbanking.utils.RandomGen;
-
 public class User {
 	
-	private String Name;
+	private String name;
 
 	private int id;
 	
@@ -15,47 +13,71 @@ public class User {
 	
 	public User() {		
 		
-		id = RandomGen.GenerateID();
-		
-		Name = "DefaultUser"+id;
+		name = "DefaultUser"+id;
 		
 		allAccounts = new ArrayList<Account>();
 	}
 	
-	public User(String in_Name) {	
+	public User(String in_Name) {		
 		
-		id = RandomGen.GenerateID();
-		
-		Name = in_Name;
+		name = in_Name;
 		
 		allAccounts = new ArrayList<Account>();
 	}
 
 	public User(String in_Name,ArrayList<Account> in_array) {		
 		
-		id = RandomGen.GenerateID();
-		
-		Name = in_Name;
+		name = in_Name;
 		
 		allAccounts.addAll(in_array); 
 	}
 	
 	public int getID() { return id; }
 	
+	public void setID(int id)
+	{
+		this.id=id;
+	}
+	
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 	
 	public List<Account> getAllAccounts() {
 		return allAccounts;
 	}
 
-	public void addAccount(Account in_Account) {
-		allAccounts.add(in_Account);
+	
+	public boolean delAccount(int in_id)
+	{
+		for(Account ac1: allAccounts)
+			if(ac1.getId()==in_id)
+			{
+				allAccounts.remove(ac1);
+				return true;
+			}
+		return false;
+	}
+	
+	public boolean addAccount(Account in_Account) {		
+		
+		if(HasThisCurrency(in_Account.getTyp())) return false;
+		else 
+		{
+			allAccounts.add(in_Account);
+			return true;
+		}
+	}
+	
+	public boolean HasThisCurrency(CurrencyType typ)
+	{
+		for(Account ac1 : allAccounts)
+			if(ac1.sameCurrency(typ)) return true;
+		return false;
 	}
 	
 }
