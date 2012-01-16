@@ -1,4 +1,4 @@
-INSERT into user (name) values ('testUser');
+insert into user (name) values ('testUser');
 insert into accounts (id, quantity , typ ) values(23,10.1,1);
 insert into userDic ( user_id , account_id ) values (1,23);
 insert into mytransactions ( id , value , date ) values ( 11, 10 , '2020-2-14');

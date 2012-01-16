@@ -29,6 +29,8 @@ public class User {
 		
 		name = in_Name;
 		
+		allAccounts = new ArrayList<Account>();
+		
 		allAccounts.addAll(in_array); 
 	}
 	

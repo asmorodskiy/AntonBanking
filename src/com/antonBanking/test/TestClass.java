@@ -1,8 +1,9 @@
 package com.antonBanking.test;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
-import com.antonbanking.business.CurrencyType;
+import com.antonbanking.business.User;
 import com.antonbanking.dao.UserDAO;
 
 public class TestClass {
@@ -14,9 +15,13 @@ public class TestClass {
 	 */
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		
-		CurrencyType typ = CurrencyType.hrivna;
+		UserDAO db_usr = new UserDAO();
 		
-		System.out.println(typ.getInt());
+		ArrayList<User> usr = db_usr.findAll();
+		
+		for(User u1 : usr)
+		System.out.println(u1.getName());	
+		
 	}
 
 }

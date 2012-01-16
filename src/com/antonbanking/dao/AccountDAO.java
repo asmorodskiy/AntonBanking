@@ -69,7 +69,7 @@ public class AccountDAO extends MySQLDAO{
 		ResultSet rez=statement.executeQuery();
 		if(rez.next())
 		{
-			CurrencyType typ = CurrencyType.valueOf(rez.getString(1));
+			CurrencyType typ = CurrencyType.getCurrency(Integer.valueOf(rez.getString(1)));
 			double quantity = rez.getDouble(2);
 			Account to_ret = new Account(typ);
 			MyTransactionDAO transDAO = new MyTransactionDAO();

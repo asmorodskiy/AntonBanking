@@ -33,8 +33,8 @@
 			<c:forEach items="${Users}" var="lst">
 				<tr>
 					<td>${Test1}</td>
-					<td><c:out value="${lst.Id}" /></td>
-					<td><c:out value="${lst.Name}" /></td>				
+					<td><c:out value="${lst.id}" /></td>
+					<td><c:out value="${lst.name}" /></td>				
 				</tr>
 			</c:forEach>
 		</TBODY>

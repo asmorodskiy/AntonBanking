@@ -2,6 +2,7 @@ package com.antonbanking.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.antonbanking.business.User;
 
@@ -14,6 +15,8 @@ public class UserDAO extends MySQLDAO{
 	public static final String deleteUser="delete from user where id=?;";	
 	
 	public static final String findUser="select name from user where id=?";
+	
+	public static final String findAll="select id from user;";
 	
 		
 	public UserDAO() throws ClassNotFoundException, SQLException {
@@ -48,6 +51,20 @@ public class UserDAO extends MySQLDAO{
 		AccountDAO acc = new AccountDAO();
 		
 		return new User(name,acc.getAllAccountsByID(id));
+	}
+	
+	public ArrayList<User> findAll() throws SQLException, ClassNotFoundException
+	{
+		ResultSet rez = executeStatement(findAll);
+		
+		ArrayList<User> to_ret = new ArrayList<User>();
+		do 
+		{
+			to_ret.add(find(rez.getInt(1)));
+		}
+		while(rez.next());		
+		
+		return to_ret;
 	}
 
 }

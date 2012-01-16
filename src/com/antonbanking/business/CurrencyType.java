@@ -17,4 +17,19 @@ public enum CurrencyType {
 		}
 		return 0;
 	}
+	
+	public static CurrencyType getCurrency(int cur_id)
+	{
+		switch (cur_id) {
+			case 1:
+				return dollar;
+			case 2:
+				return hrivna;		
+			case 3:
+				return euros;			
+			case 4:
+				return piastras;					
+			}
+			return dollar;
+	}
 }
