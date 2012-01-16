@@ -23,16 +23,14 @@
 	<table id="UserList" class="display" cellspacing="0" cellpadding="0"
 		border="1">
 		<thead>
-			<tr>
-				<th>tst</th>
+			<tr>				
 				<th>Id</th>
 				<th>Name</th>
 			</tr>			
 		</thead>
 		<TBODY>
 			<c:forEach items="${Users}" var="lst">
-				<tr>
-					<td>${Test1}</td>
+				<tr>					
 					<td><c:out value="${lst.id}" /></td>
 					<td><c:out value="${lst.name}" /></td>				
 				</tr>

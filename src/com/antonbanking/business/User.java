@@ -34,9 +34,9 @@ public class User {
 		allAccounts.addAll(in_array); 
 	}
 	
-	public int getID() { return id; }
+	public int getId() { return id; }
 	
-	public void setID(int id)
+	public void setId(int id)
 	{
 		this.id=id;
 	}

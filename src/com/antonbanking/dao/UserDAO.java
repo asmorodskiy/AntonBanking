@@ -29,7 +29,7 @@ public class UserDAO extends MySQLDAO{
 		
 		ResultSet resultSet = executeStatement(getMaxID);		
 		
-		to_add.setID(resultSet.getInt(1)+1);
+		to_add.setId(resultSet.getInt(1)+1);
 		
 		ExecutePreparedStatement(addUserSQL,to_add.getName());		
 		 
