@@ -17,13 +17,26 @@ public class AdminServlet extends HttpServlet {
 	
 	class User {
 		
-		public int Id;
-		public String Name;
-		public User(int Id,String Name)
+		public int id;
+		public String name;
+		public User(int id,String name)
 		{
-			this.Id=Id;
-			this.Name=Name;
+			this.id=id;
+			this.name=name;
 		}
+		public int getId() {
+			return id;
+		}
+		public void setId(int id) {
+			this.id = id;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
