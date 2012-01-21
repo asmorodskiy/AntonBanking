@@ -18,24 +18,24 @@
 <title>Anton Banking Inc</title>
 </head>
 <body>
-	<form method="get" action="AddUserServlet">
-		<input type="submit" value="Add User" />
-		<input type="text" name="NewUser" />
+	<form method="get" action="AddAccountServlet">
+		<input type="submit" value="Add Account" />
+		<input type="text" name="NewAccount" />
 	</form>	
-	<form method="GET" action="AdminServlet">
-	<h1 align="center">List of Users</h1>	
-	<table id="UserList" cellspacing="0" cellpadding="0" border="1" align="center" >
+	<form method="GET" action="AccountsServlet">
+	<h1 align="center">List of Accounts for <c:out value="${UserId}" /></h1>	
+	<table id="AccountsList" cellspacing="0" cellpadding="0" border="1" align="center" >
 		<thead>
-			<tr>				
-				<th>Id</th>
-				<th>Name</th>
+			<tr>
+				<th>Type</th>
+				<th>Quantity</th>
 			</tr>			
 		</thead>
 		<TBODY>
-			<c:forEach items="${Users}" var="lst">
+			<c:forEach items="${Accounts}" var="lst">
 				<tr>					
-					<td><a href="/AntonBanking/AccountsServlet?userId=${lst.id}"><c:out value="${lst.id}" /></a></td>
-					<td><c:out value="${lst.name}" /></td>				
+					<td><c:out value="${lst.typ}" /></td>
+					<td><c:out value="${lst.quantity}" /></td>				
 				</tr>
 			</c:forEach>
 		</TBODY>

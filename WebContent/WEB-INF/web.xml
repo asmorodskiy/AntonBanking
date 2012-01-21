@@ -8,9 +8,25 @@
 	<servlet>
 		<servlet-name>AdminServlet</servlet-name>
 		<servlet-class>com.antonbanking.servlet.AdminServlet</servlet-class>
+	</servlet>	
+	<servlet>
+		<servlet-name>AddUserServlet</servlet-name>
+		<servlet-class>com.antonbanking.servlet.AddUserServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>AccountsServlet</servlet-name>
+		<servlet-class>com.antonbanking.servlet.AccountsServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AdminServlet</servlet-name>
 		<url-pattern>/</url-pattern>
+	</servlet-mapping>	
+	<servlet-mapping>
+		<servlet-name>AddUserServlet</servlet-name>
+		<url-pattern>/AddUserServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AccountsServlet</servlet-name>
+		<url-pattern>/AccountsServlet</url-pattern>
 	</servlet-mapping>
 </web-app>

@@ -1,3 +1,4 @@
+use antonbanking;
 insert into user (name) values ('testUser');
 insert into accounts (id, quantity , typ ) values(23,10.1,1);
 insert into userDic ( user_id , account_id ) values (1,23);

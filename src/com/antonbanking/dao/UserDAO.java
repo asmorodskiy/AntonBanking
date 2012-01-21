@@ -23,9 +23,9 @@ public class UserDAO extends MySQLDAO{
 		super();
 	}
 
-	public User insert() throws SQLException
+	public User insert(String username) throws SQLException
 	{		
-		User to_add = new User();		
+		User to_add = new User(username);		
 		
 		ResultSet resultSet = executeStatement(getMaxID);		
 		
@@ -50,7 +50,11 @@ public class UserDAO extends MySQLDAO{
 		
 		AccountDAO acc = new AccountDAO();
 		
-		return new User(name,acc.getAllAccountsByID(id));
+		User to_ret = new User(name,acc.getAllAccountsByID(id)); 
+		
+		to_ret.setId(id);
+		
+		return to_ret; 
 	}
 	
 	public ArrayList<User> findAll() throws SQLException, ClassNotFoundException
