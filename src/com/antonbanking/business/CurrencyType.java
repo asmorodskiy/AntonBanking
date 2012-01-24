@@ -32,4 +32,19 @@ public enum CurrencyType {
 			}
 			return dollar;
 	}
+	
+	public String getStr()
+	{
+		switch (this) {
+			case dollar:
+				return "dollar";
+			case hrivna:
+				return "hrivna";		
+			case euros:
+				return "euros";			
+			case piastras:
+				return "piastras";					
+			}
+			return "dollar";
+	}
 }

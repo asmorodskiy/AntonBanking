@@ -19,8 +19,14 @@
 </head>
 <body>
 	<form method="get" action="AddAccountServlet">
-		<input type="submit" value="Add Account" />
-		<input type="text" name="NewAccount" />
+		<input type="submit" value="Add Account" />		
+		<input type="text" name="Quantity" />
+		<input type="hidden" name="UserId" value="${UserId}" />
+		<SELECT name="typ">
+			<c:forEach items="${Types}" var="Typ">
+				<option value="${Typ}">${Typ}</option>
+			</c:forEach>
+		</SELECT>		
 	</form>	
 	<form method="GET" action="AccountsServlet">
 	<h1 align="center">List of Accounts for <c:out value="${UserId}" /></h1>	
@@ -32,10 +38,10 @@
 			</tr>			
 		</thead>
 		<TBODY>
-			<c:forEach items="${Accounts}" var="lst">
+			<c:forEach items="${Ac}" var="lst">
 				<tr>					
-					<td><c:out value="${lst.typ}" /></td>
-					<td><c:out value="${lst.quantity}" /></td>				
+					<td><c:out value="${lst.typstr}" /></td>
+					<td><c:out value="${lst.qanstr}" /></td>				
 				</tr>
 			</c:forEach>
 		</TBODY>

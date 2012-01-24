@@ -25,6 +25,16 @@ public class Account {
 	{
 		return quantity;
 	}
+	
+	public String getQanstr()
+	{
+		return String.valueOf(quantity);
+	}
+	
+	public String getTypstr()
+	{
+		return typ.getStr();
+	}
 
 	public int getId() {
 		return id;

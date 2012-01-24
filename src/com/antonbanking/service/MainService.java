@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.antonbanking.business.Account;
+import com.antonbanking.business.CurrencyType;
 import com.antonbanking.business.User;
 import com.antonbanking.dao.AccountDAO;
 import com.antonbanking.dao.UserDAO;
@@ -28,7 +29,11 @@ public class MainService {
 		db.insert(username);
 	}
 	
-	
+	public static void AddAccount(String userID,String typ,String qantity) throws ClassNotFoundException, SQLException
+	{
+		AccountDAO db = new AccountDAO();
+		db.insert(Integer.valueOf(userID),Double.valueOf(qantity),CurrencyType.valueOf(typ));
+	}
 	
 	////// 
 	public static User getUser(int id) throws ClassNotFoundException, SQLException

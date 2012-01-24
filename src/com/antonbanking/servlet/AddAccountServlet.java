@@ -21,8 +21,8 @@ public class AddAccountServlet extends HttpServlet{
 			throws ServletException, IOException {					
 			
 			try {
-				MainService.AddUser(request.getParameter("NewUser"));
-				response.sendRedirect("/AntonBanking/AdminServlet");
+				MainService.AddAccount(request.getParameter("UserId"),request.getParameter("typ"),request.getParameter("Quantity"));
+				response.sendRedirect("/AntonBanking/AccountsServlet");
 			} catch (ClassNotFoundException e) {
 				request.getRequestDispatcher("error.html").forward(request,response);
 			} catch (SQLException e) {

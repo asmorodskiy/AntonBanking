@@ -2,12 +2,14 @@ package com.antonbanking.servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.antonbanking.business.CurrencyType;
 import com.antonbanking.service.MainService;
 
 //import com.antonbanking.service.MainService;
@@ -23,15 +25,19 @@ public class AccountsServlet extends HttpServlet{
 			throws ServletException, IOException {		
 
 		try {	
-			int userId = (Integer)request.getAttribute("userId");
-			request.setAttribute("Accoounts",MainService.getAllAccounts(userId));
+			int userId = Integer.valueOf(request.getParameter("userId"));
+			ArrayList<String> to_jsp = new ArrayList<String>();
+			CurrencyType[] currency_arr= CurrencyType.values();
+			for(CurrencyType val1 : currency_arr)
+				to_jsp.add(val1.getStr());
+			request.setAttribute("Ac",MainService.getAllAccounts(userId));
+			request.setAttribute("Types",to_jsp);
 			request.getRequestDispatcher("accounts.jsp").forward(request,response);
 		} catch (ClassNotFoundException e) {			
 			request.getRequestDispatcher("error.html").forward(request,response);
 		} catch (SQLException e) {
 			request.getRequestDispatcher("error.html").forward(request,response);			
-		}		
-		
+		}
 
 	}
 
