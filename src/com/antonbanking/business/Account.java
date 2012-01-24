@@ -84,6 +84,6 @@ public class Account {
 
 	public boolean sameCurrency(CurrencyType in)
 	{
-		return typ.equals(this.typ);
+		return typ.equals(in);
 	}
 }

@@ -32,6 +32,7 @@ public class AccountsServlet extends HttpServlet{
 				to_jsp.add(val1.getStr());
 			request.setAttribute("Ac",MainService.getAllAccounts(userId));
 			request.setAttribute("Types",to_jsp);
+			request.setAttribute("UserId",request.getParameter("userId"));
 			request.getRequestDispatcher("accounts.jsp").forward(request,response);
 		} catch (ClassNotFoundException e) {			
 			request.getRequestDispatcher("error.html").forward(request,response);

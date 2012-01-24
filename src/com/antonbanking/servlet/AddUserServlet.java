@@ -23,12 +23,13 @@ public class AddUserServlet extends HttpServlet {
 			
 			try {
 				MainService.AddUser(request.getParameter("NewUser"));
+				response.sendRedirect("/AntonBanking/AdminServlet");
 			} catch (ClassNotFoundException e) {
 				request.getRequestDispatcher("error.html").forward(request,response);
 			} catch (SQLException e) {
 				request.getRequestDispatcher("error.html").forward(request,response);
 			}
-			response.sendRedirect("/AntonBanking/AdminServlet");
+			
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)

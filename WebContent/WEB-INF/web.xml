@@ -17,6 +17,10 @@
 		<servlet-name>AccountsServlet</servlet-name>
 		<servlet-class>com.antonbanking.servlet.AccountsServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>AddAccountServlet</servlet-name>
+		<servlet-class>com.antonbanking.servlet.AddAccountServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>AdminServlet</servlet-name>
 		<url-pattern>/</url-pattern>
@@ -28,5 +32,9 @@
 	<servlet-mapping>
 		<servlet-name>AccountsServlet</servlet-name>
 		<url-pattern>/AccountsServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AddAccountServlet</servlet-name>
+		<url-pattern>/AddAccountServlet</url-pattern>
 	</servlet-mapping>
 </web-app>
