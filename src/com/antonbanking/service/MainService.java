@@ -5,8 +5,10 @@ import java.util.ArrayList;
 
 import com.antonbanking.business.Account;
 import com.antonbanking.business.CurrencyType;
+import com.antonbanking.business.MyTransaction;
 import com.antonbanking.business.User;
 import com.antonbanking.dao.AccountDAO;
+import com.antonbanking.dao.MyTransactionDAO;
 import com.antonbanking.dao.UserDAO;
 
 public class MainService {
@@ -23,6 +25,12 @@ public class MainService {
 		return db.getAllAccountsByID(userID);
 	}
 	
+	public static ArrayList<MyTransaction> getAllMyTransactions(int account_id) throws ClassNotFoundException, SQLException
+	{
+		MyTransactionDAO db = new MyTransactionDAO();
+		return db.getAllMyTransactionsByID(account_id);
+	}
+	
 	public static void AddUser(String username) throws ClassNotFoundException, SQLException
 	{
 		UserDAO db = new UserDAO();
@@ -33,12 +41,12 @@ public class MainService {
 	{
 		AccountDAO db = new AccountDAO();
 		db.insert(Integer.valueOf(userID),Double.valueOf(qantity),CurrencyType.valueOf(typ));
-	}
-	
-	////// 
-	public static User getUser(int id) throws ClassNotFoundException, SQLException
+	}	
+	 
+	public static String getUserName(int id) throws ClassNotFoundException, SQLException
 	{
 		UserDAO db = new UserDAO();
-		return db.find(id);
+		return db.find(id).getName();
 	}
+	
 }

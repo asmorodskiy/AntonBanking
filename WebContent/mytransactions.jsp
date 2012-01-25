@@ -40,7 +40,7 @@
 		<TBODY>
 			<c:forEach items="${Ac}" var="lst">
 				<tr>					
-					<td><a href="/AntonBanking/MyTransactionServlet?userId=${UserId},accountId=${lst.typidstr}"> <c:out value="${lst.typstr}" /> </a></td>
+					<td><a href="/AntonBanking/MyTransactionServlet?userId=${UserId},accountId=${lst.idstr}"> <c:out value="${lst.typstr}" /> </a></td>
 					<td><c:out value="${lst.qanstr}" /></td>				
 				</tr>
 			</c:forEach>

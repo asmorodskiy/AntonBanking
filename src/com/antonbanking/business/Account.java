@@ -34,10 +34,14 @@ public class Account {
 	public String getTypstr()
 	{
 		return typ.getStr();
-	}
+	}	
 
 	public int getId() {
 		return id;
+	}
+	
+	public String getIdstr() {
+		return String.valueOf(id);
 	}
 
 	public CurrencyType getTyp() {
