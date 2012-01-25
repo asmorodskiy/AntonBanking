@@ -49,4 +49,15 @@ public class MainService {
 		return db.find(id).getName();
 	}
 	
+	public static String getAccountCurrencyName(int account_id) throws ClassNotFoundException, SQLException
+	{
+		AccountDAO db = new AccountDAO();
+		return db.getAccountCurrencyName(account_id);
+	}
+	
+	public static void AddTransaction(String account_id,double value) throws ClassNotFoundException, SQLException
+	{
+		MyTransactionDAO db = new MyTransactionDAO();
+		db.insert(Integer.valueOf(account_id),value);
+	}
 }

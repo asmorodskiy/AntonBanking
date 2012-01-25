@@ -23,11 +23,12 @@ public class MyTransactionServlet extends HttpServlet {
 			int userId = Integer.valueOf(request.getParameter("userId"));			
 			String usr_name = MainService.getUserName(userId);
 			int account_id = Integer.valueOf(request.getParameter("accountId"));
-			request.setAttribute("Transactions",MainService.getAllMyTransactions(account_id));
-			
+			request.setAttribute("Transactions",MainService.getAllMyTransactions(account_id));			
 			request.setAttribute("UserId",request.getParameter("userId"));
 			request.setAttribute("UserName",usr_name);
-			request.getRequestDispatcher("accounts.jsp").forward(request,response);
+			request.setAttribute("CurrencyName",MainService.getAccountCurrencyName(account_id));
+			request.setAttribute("accountId",String.valueOf(account_id));
+			request.getRequestDispatcher("mytransactions.jsp").forward(request,response);
 		} catch (ClassNotFoundException e) {			
 			request.getRequestDispatcher("error.html").forward(request,response);
 		} catch (SQLException e) {

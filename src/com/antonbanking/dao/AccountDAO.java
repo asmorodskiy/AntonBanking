@@ -92,5 +92,11 @@ public class AccountDAO extends MySQLDAO{
 			 to_ret.add(find(acc_id));
 		return to_ret;
 	}
+	
+	public String getAccountCurrencyName(int accountId) throws SQLException, ClassNotFoundException
+	{
+		Account acc = find(accountId);
+		return acc.getTypstr();
+	}
 
 }

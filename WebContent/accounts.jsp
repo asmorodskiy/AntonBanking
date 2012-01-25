@@ -20,8 +20,7 @@
 <body>
 	<form method="get" action="AddAccountServlet">
 		<input type="submit" value="Add Account" />		
-		<input type="text" name="Quantity" />
-		<input type="hidden" name="UserId" value="${UserId}" />
+		<input type="text" name="Quantity" />		
 		<SELECT name="typ">
 			<c:forEach items="${Types}" var="Typ">
 				<option value="${Typ}">${Typ}</option>
@@ -40,7 +39,7 @@
 		<TBODY>
 			<c:forEach items="${Ac}" var="lst">
 				<tr>					
-					<td><a href="/AntonBanking/MyTransactionServlet?userId=${UserId},accountId=${lst.typidstr}"> <c:out value="${lst.typstr}" /> </a></td>
+					<td><a href="/AntonBanking/MyTransactionServlet?userId=${UserId}&amp;accountId=${lst.idstr}"> <c:out value="${lst.typstr}" /> </a></td>
 					<td><c:out value="${lst.qanstr}" /></td>				
 				</tr>
 			</c:forEach>

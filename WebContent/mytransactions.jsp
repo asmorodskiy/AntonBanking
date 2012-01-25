@@ -18,30 +18,31 @@
 <title>Anton Banking Inc</title>
 </head>
 <body>
-	<form method="get" action="AddAccountServlet">
-		<input type="submit" value="Add Account" />		
-		<input type="text" name="Quantity" />
-		<input type="hidden" name="UserId" value="${UserId}" />
-		<SELECT name="typ">
-			<c:forEach items="${Types}" var="Typ">
-				<option value="${Typ}">${Typ}</option>
-			</c:forEach>
-		</SELECT>		
-	</form>	
-	<form method="GET" action="AccountsServlet">
-	<h1 align="center">List of Accounts for <c:out value="${UserName}" /></h1>	
-	<table id="AccountsList" cellspacing="0" cellpadding="0" border="1" align="center" >
+	<c:if test="${error != null }">
+	<h1 size="23" color="red"> Shit happens </h1>	
+	</c:if>
+	<form method="get" action="AddMyTransactionServlet">
+		<input type="submit" value="Add Money" />				
+		<input type="text" name="valplus" />
+	</form>
+	<form method="get" action="AddMyTransactionServlet">
+		<input type="submit" value="Take Money" />				
+		<input type="text" name="valminus" />
+	</form>		
+	<form method="GET" action="MyTransactionServlet">
+	<h1 align="center">List of Transactions for <c:out value="${UserName}" /> currency=<c:out value="${CurrencyName}" /></h1>	
+	<table id="MyTransactionsList" cellspacing="0" cellpadding="0" border="1" align="center" >
 		<thead>
 			<tr>
-				<th>Type</th>
-				<th>Quantity</th>
+				<th>Date</th>
+				<th>Value</th>
 			</tr>			
 		</thead>
 		<TBODY>
-			<c:forEach items="${Ac}" var="lst">
+			<c:forEach items="${Transactions}" var="lst">
 				<tr>					
-					<td><a href="/AntonBanking/MyTransactionServlet?userId=${UserId},accountId=${lst.idstr}"> <c:out value="${lst.typstr}" /> </a></td>
-					<td><c:out value="${lst.qanstr}" /></td>				
+					<td><c:out value="${lst.datestr}" /></td>
+					<td><c:out value="${lst.valuestr}" /></td>				
 				</tr>
 			</c:forEach>
 		</TBODY>

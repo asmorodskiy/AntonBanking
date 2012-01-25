@@ -35,8 +35,8 @@ public class MyTransactionDAO extends MySQLDAO{
 		to_ret.setID(tr_id);
 		PreparedStatement statement = getPreparedStatement(insertTransaction);
 		statement.setInt(1,to_ret.getID());
-		statement.setDouble(2,to_ret.getTrans_value());
-		statement.setDate(3,to_ret.getTrans_date());
+		statement.setDouble(2,to_ret.getValue());
+		statement.setDate(3,to_ret.getDate());
 		statement.executeQuery();
 		statement = getPreparedStatement(insertTransactionDic);
 		statement.setInt(1,to_ret.getID());
