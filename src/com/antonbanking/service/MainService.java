@@ -31,10 +31,21 @@ public class MainService {
 		return db.getAllMyTransactionsByID(account_id);
 	}
 	
-	public static void AddUser(String username) throws ClassNotFoundException, SQLException
+	public static boolean AddUser(String username)
 	{
-		UserDAO db = new UserDAO();
-		db.insert(username);
+		UserDAO db;
+		try {
+			db = new UserDAO();
+			db.insert(username);
+			return true;
+		} catch (ClassNotFoundException e) {			
+			e.printStackTrace();
+			return false;
+		} catch (SQLException e) {			
+			e.printStackTrace();
+			return false;
+		}
+		
 	}
 	
 	public static void AddAccount(String userID,String typ,String qantity) throws ClassNotFoundException, SQLException

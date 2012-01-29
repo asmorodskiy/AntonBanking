@@ -17,7 +17,10 @@
 <head>
 <title>Anton Banking Inc</title>
 </head>
-<body>
+<body>	
+	<c:if test="${error != null }">
+	<h1 size="23" color="red"> Shit happens </h1>	
+	</c:if>
 	<form method="get" action="AddUserServlet">
 		<input type="submit" value="Add User" />
 		<input type="text" name="NewUser" />

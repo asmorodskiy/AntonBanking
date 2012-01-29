@@ -18,6 +18,7 @@
 <title>Anton Banking Inc</title>
 </head>
 <body>
+	<a href="/AntonBanking/AdminServlet">Back to list of users</a>
 	<form method="get" action="AddAccountServlet">
 		<input type="submit" value="Add Account" />		
 		<input type="text" name="Quantity" />		

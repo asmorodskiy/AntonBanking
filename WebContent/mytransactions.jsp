@@ -18,6 +18,7 @@
 <title>Anton Banking Inc</title>
 </head>
 <body>
+	<a href="/AntonBanking/AccountsServlet?userId=${userId}">Back to list of accounts for ${UserName}</a>
 	<c:if test="${error != null }">
 	<h1 size="23" color="red"> Shit happens </h1>	
 	</c:if>
