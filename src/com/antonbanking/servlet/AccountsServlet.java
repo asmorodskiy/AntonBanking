@@ -29,7 +29,7 @@ public class AccountsServlet extends HttpServlet{
 			ArrayList<String> to_jsp = new ArrayList<String>();
 			CurrencyType[] currency_arr= CurrencyType.values();
 			for(CurrencyType val1 : currency_arr)
-				to_jsp.add(val1.getStr());
+				to_jsp.add(val1.getName());
 			String usr_name = MainService.getUserName(userId);
 			request.setAttribute("Ac",MainService.getAllAccounts(userId));
 			request.setAttribute("Types",to_jsp);

@@ -1,21 +1,23 @@
 package com.antonbanking.business;
 
 public enum CurrencyType {
-	dollar,hrivna,euros,piastras;
+	dollar(1,"dollar"),hrivna(2,"hrivna"),euros(3,"euros"),piastras(4,"piastras");
 	
-	public int getInt()
+	private int id;
+	public int getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	private String name;
+	
+	CurrencyType(int id,String name)
 	{
-		switch (this) {
-		case dollar:
-			return 1;
-		case hrivna:
-			return 2;		
-		case euros:
-			return 3;			
-		case piastras:
-			return 4;					
-		}
-		return 0;
+		this.id=id;
+		this.name=name;
 	}
 	
 	public static CurrencyType getCurrency(int cur_id)
@@ -31,20 +33,5 @@ public enum CurrencyType {
 				return piastras;					
 			}
 			return dollar;
-	}
-	
-	public String getStr()
-	{
-		switch (this) {
-			case dollar:
-				return "dollar";
-			case hrivna:
-				return "hrivna";		
-			case euros:
-				return "euros";			
-			case piastras:
-				return "piastras";					
-			}
-			return "dollar";
-	}
+	}	
 }

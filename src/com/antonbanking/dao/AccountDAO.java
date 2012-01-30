@@ -46,7 +46,7 @@ public class AccountDAO extends MySQLDAO{
 			PreparedStatement statement = getPreparedStatement(addAccountSQL);
 			statement.setInt(1,acc1.getId());
 			statement.setDouble(2,acc1.getQantity());
-			statement.setInt(3,typ.getInt());
+			statement.setInt(3,typ.getId());
 			statement.executeUpdate();
 			statement = getPreparedStatement(addToDic);
 			statement.setInt(1,user_id);

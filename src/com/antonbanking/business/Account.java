@@ -33,7 +33,7 @@ public class Account {
 	
 	public String getTypstr()
 	{
-		return typ.getStr();
+		return typ.getName();
 	}	
 
 	public int getId() {
