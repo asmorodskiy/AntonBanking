@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.antonbanking.service.MainService;
 
+
+// store userid in context of session
+
 public class AdminServlet extends HttpServlet {
 
 	/**
