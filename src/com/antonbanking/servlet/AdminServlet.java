@@ -24,7 +24,7 @@ public class AdminServlet extends HttpServlet {
 			throws ServletException, IOException {		
 
 		try {	
-			request.setAttribute("Users",MainService.getAllUsers());
+			request.setAttribute("ATMUsers",MainService.getAllUsers());
 			request.getRequestDispatcher("index.jsp").forward(request,response);
 		} catch (ClassNotFoundException e) {			
 			request.getRequestDispatcher("error.html").forward(request,response);

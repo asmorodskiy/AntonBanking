@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import com.antonbanking.business.User;
 
-public class UserDAO extends MySQLDAO{
+public class UserDAO extends MySQLDAO implements IUserDAO{
 	
 	public static final String addUserSQL="INSERT into user (name) values (?);";
 	

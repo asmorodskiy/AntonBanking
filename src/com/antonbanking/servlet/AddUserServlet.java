@@ -21,7 +21,7 @@ public class AddUserServlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 			boolean passed = true;
-			String NewUser = request.getParameter("NewUser");
+			String NewUser = request.getParameter("ATMNewUser");
 			passed =  StringUtils.isNotBlank(NewUser);
 			if(passed) passed=MainService.AddUser(NewUser);
 			if(!passed) response.sendRedirect("/AntonBanking/AdminServlet?error=error!");

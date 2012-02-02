@@ -18,7 +18,7 @@
 <title>Anton Banking Inc</title>
 </head>
 <body>
-	<a href="/AntonBanking/AccountsServlet?userId=${userId}">Back to list of accounts for ${UserName}</a>
+	<a href="/AntonBanking/AccountsServlet?ATMUserID=${ATMUserID}">Back to list of accounts for ${ATMUserName}</a>
 	<c:if test="${error != null }">
 	<h1 size="23" color="red"> Shit happens </h1>	
 	</c:if>
@@ -31,7 +31,7 @@
 		<input type="text" name="valminus" />
 	</form>		
 	<form method="GET" action="MyTransactionServlet">
-	<h1 align="center">List of Transactions for <c:out value="${UserName}" /> currency=<c:out value="${CurrencyName}" /></h1>	
+	<h1 align="center">List of Transactions for <c:out value="${ATMUserName}" /> currency=<c:out value="${ATMCurrencyName}" /></h1>	
 	<table id="MyTransactionsList" cellspacing="0" cellpadding="0" border="1" align="center" >
 		<thead>
 			<tr>
@@ -40,10 +40,10 @@
 			</tr>			
 		</thead>
 		<TBODY>
-			<c:forEach items="${Transactions}" var="lst">
+			<c:forEach items="${ATMTransactions}" var="transaction">
 				<tr>					
-					<td><c:out value="${lst.datestr}" /></td>
-					<td><c:out value="${lst.valuestr}" /></td>				
+					<td><c:out value="${transaction.datestr}" /></td>
+					<td><c:out value="${transaction.valuestr}" /></td>				
 				</tr>
 			</c:forEach>
 		</TBODY>

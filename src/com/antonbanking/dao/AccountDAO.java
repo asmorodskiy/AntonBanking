@@ -9,7 +9,7 @@ import com.antonbanking.business.Account;
 import com.antonbanking.business.CurrencyType;
 import com.antonbanking.business.User;
 
-public class AccountDAO extends MySQLDAO{
+public class AccountDAO extends MySQLDAO implements IAccountDAO{
 
 
 	public static final String addAccountSQL="insert into accounts (id, quantity , typ ) values(?,?,?);";

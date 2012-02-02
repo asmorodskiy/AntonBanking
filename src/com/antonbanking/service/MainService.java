@@ -19,16 +19,36 @@ public class MainService {
 		return db.findAll();
 	}
 	
-	public static ArrayList<Account> getAllAccounts(int userID) throws ClassNotFoundException, SQLException
+	public static ArrayList<Account> getAllAccounts(int userID)
 	{		
-		AccountDAO db = new AccountDAO();
-		return db.getAllAccountsByID(userID);
+		AccountDAO db;
+		try {
+			db = new AccountDAO();
+			return db.getAllAccountsByID(userID);
+		} catch (ClassNotFoundException e) {			
+			e.printStackTrace();
+			return null;
+		} catch (SQLException e) {			
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 	
-	public static ArrayList<MyTransaction> getAllMyTransactions(int account_id) throws ClassNotFoundException, SQLException
+	public static ArrayList<MyTransaction> getAllMyTransactions(int account_id) 
 	{
-		MyTransactionDAO db = new MyTransactionDAO();
-		return db.getAllMyTransactionsByID(account_id);
+		MyTransactionDAO db;
+		try {
+			db = new MyTransactionDAO();
+			return db.getAllMyTransactionsByID(account_id);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		} catch (SQLException e) {			
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 	
 	public static boolean AddUser(String username)
@@ -48,27 +68,69 @@ public class MainService {
 		
 	}
 	
-	public static void AddAccount(String userID,String typ,String qantity) throws ClassNotFoundException, SQLException
+	public static boolean AddAccount(String userID,String typ,String qantity) 
 	{
-		AccountDAO db = new AccountDAO();
-		db.insert(Integer.valueOf(userID),Double.valueOf(qantity),CurrencyType.valueOf(typ));
+		AccountDAO db;
+		try {
+			db = new AccountDAO();
+			db.insert(Integer.valueOf(userID),Double.valueOf(qantity),CurrencyType.valueOf(typ));
+			return true;
+		} catch (ClassNotFoundException e) {			
+			e.printStackTrace();
+			return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
 	}	
 	 
-	public static String getUserName(int id) throws ClassNotFoundException, SQLException
+	public static String getUserName(int id)
 	{
-		UserDAO db = new UserDAO();
-		return db.find(id).getName();
+		UserDAO db;
+		try {
+			db = new UserDAO();
+			return db.find(id).getName();
+		} catch (ClassNotFoundException e) {			
+			e.printStackTrace();
+			return null;
+		} catch (SQLException e) {			
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 	
-	public static String getAccountCurrencyName(int account_id) throws ClassNotFoundException, SQLException
+	public static String getAccountCurrencyName(int account_id)
 	{
-		AccountDAO db = new AccountDAO();
-		return db.getAccountCurrencyName(account_id);
+		AccountDAO db;
+		try {
+			db = new AccountDAO();
+			return db.getAccountCurrencyName(account_id);
+		} catch (ClassNotFoundException e) {			
+			e.printStackTrace();
+			return null;
+		} catch (SQLException e) {			
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 	
-	public static void AddTransaction(String account_id,double value) throws ClassNotFoundException, SQLException
+	public static boolean AddTransaction(String account_id,double value)
 	{
-		MyTransactionDAO db = new MyTransactionDAO();
-		db.insert(Integer.valueOf(account_id),value);
+		MyTransactionDAO db;
+		try {
+			db = new MyTransactionDAO();
+			db.insert(Integer.valueOf(account_id),value);
+			return true;
+		} catch (ClassNotFoundException e) {			
+			e.printStackTrace();
+			return false;
+		} catch (SQLException e) {			
+			e.printStackTrace();
+			return false;
+		}
+		
 	}
 }

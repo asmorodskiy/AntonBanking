@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import com.antonbanking.business.MyTransaction;
 
-public class MyTransactionDAO extends MySQLDAO{
+public class MyTransactionDAO extends MySQLDAO implements IMyTransactionDAO {
 	
 	public final static String getMaxID="select max(id) from mytransactions;";
 	
@@ -37,11 +37,11 @@ public class MyTransactionDAO extends MySQLDAO{
 		statement.setInt(1,to_ret.getID());
 		statement.setDouble(2,to_ret.getValue());
 		statement.setDate(3,to_ret.getDate());
-		statement.executeQuery();
+		statement.executeUpdate();
 		statement = getPreparedStatement(insertTransactionDic);
 		statement.setInt(1,to_ret.getID());
 		statement.setInt(2,account_id);
-		statement.executeQuery();
+		statement.executeUpdate();
 		return to_ret;
 	}
 	

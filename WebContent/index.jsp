@@ -23,7 +23,7 @@
 	</c:if>
 	<form method="get" action="AddUserServlet">
 		<input type="submit" value="Add User" />
-		<input type="text" name="NewUser" />
+		<input type="text" name="ATMNewUser" />
 	</form>	
 	<form method="GET" action="AdminServlet">
 	<h1 align="center">List of Users</h1>	
@@ -35,10 +35,10 @@
 			</tr>			
 		</thead>
 		<TBODY>
-			<c:forEach items="${Users}" var="lst">
+			<c:forEach items="${ATMUsers}" var="user">
 				<tr>					
-					<td><a href="/AntonBanking/AccountsServlet?userId=${lst.id}"><c:out value="${lst.id}" /></a></td>
-					<td><c:out value="${lst.name}" /></td>				
+					<td><a href="/AntonBanking/AccountsServlet?ATMUserID=${user.id}"><c:out value="${user.id}" /></a></td>
+					<td><c:out value="${user.name}" /></td>				
 				</tr>
 			</c:forEach>
 		</TBODY>

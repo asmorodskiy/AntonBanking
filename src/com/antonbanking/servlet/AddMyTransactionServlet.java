@@ -1,12 +1,12 @@
 package com.antonbanking.servlet;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.antonbanking.service.MainService;
 
@@ -20,9 +20,11 @@ public class AddMyTransactionServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {					
 			
-			try {
-				String userid=request.getParameter("UserId");
-				String accountId = request.getParameter("accountId");
+		HttpSession session = request.getSession(false);
+		if(session!=null)
+		{
+				String userid=(String) session.getAttribute("ATMUserID");
+				String accountId = (String) session.getAttribute("ATMAccountID");
 				String tmp = request.getParameter("valplus");
 				double value;
 				if(tmp == null)
@@ -32,19 +34,21 @@ public class AddMyTransactionServlet extends HttpServlet {
 					if(tmp == null)
 					{
 						request.setAttribute("error","error");
-						response.sendRedirect(String.format("/AntonBanking/MyTransactionServlet?userId=%s&accountId=%s",userid,accountId));
+						response.sendRedirect(String.format("/AntonBanking/MyTransactionServlet?ATMUserID=%s&ATMAccountID=%s",userid,accountId));
 					}
-					else value = - Double.valueOf(tmp);
+					else
+					{ 
+						value = - Double.valueOf(tmp);
+						MainService.AddTransaction(accountId,value);
+					}
 				}
-				value = Double.valueOf(tmp);
-				MainService.AddTransaction(accountId,value);				
-				response.sendRedirect(String.format("/AntonBanking/MyTransactionServlet?userId=%s&accountId=%s",userid,accountId));
-			} catch (ClassNotFoundException e) {
-				request.getRequestDispatcher("error.html").forward(request,response);
-			} catch (SQLException e) {
-				request.getRequestDispatcher("error.html").forward(request,response);
-			}
-			
+				else 
+				{
+					value = Double.valueOf(tmp);
+					MainService.AddTransaction(accountId,value);
+				}								
+				response.sendRedirect(String.format("/AntonBanking/MyTransactionServlet?ATMUserID=%s&ATMAccountID=%s",userid,accountId));
+			} 
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
