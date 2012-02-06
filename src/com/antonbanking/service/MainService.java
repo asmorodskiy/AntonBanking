@@ -8,6 +8,9 @@ import com.antonbanking.business.CurrencyType;
 import com.antonbanking.business.MyTransaction;
 import com.antonbanking.business.User;
 import com.antonbanking.dao.AccountDAO;
+import com.antonbanking.dao.IAccountDAO;
+import com.antonbanking.dao.IMyTransactionDAO;
+import com.antonbanking.dao.IUserDAO;
 import com.antonbanking.dao.MyTransactionDAO;
 import com.antonbanking.dao.UserDAO;
 
@@ -15,13 +18,13 @@ public class MainService {
 
 	public static ArrayList<User> getAllUsers() throws ClassNotFoundException, SQLException
 	{		
-		UserDAO db = new UserDAO();
+		IUserDAO db = new UserDAO();
 		return db.findAll();
 	}
 	
 	public static ArrayList<Account> getAllAccounts(int userID)
 	{		
-		AccountDAO db;
+		IAccountDAO db;
 		try {
 			db = new AccountDAO();
 			return db.getAllAccountsByID(userID);
@@ -37,7 +40,7 @@ public class MainService {
 	
 	public static ArrayList<MyTransaction> getAllMyTransactions(int account_id) 
 	{
-		MyTransactionDAO db;
+		IMyTransactionDAO db;
 		try {
 			db = new MyTransactionDAO();
 			return db.getAllMyTransactionsByID(account_id);
@@ -53,7 +56,7 @@ public class MainService {
 	
 	public static boolean AddUser(String username)
 	{
-		UserDAO db;
+		IUserDAO db;
 		try {
 			db = new UserDAO();
 			db.insert(username);
@@ -70,7 +73,7 @@ public class MainService {
 	
 	public static boolean AddAccount(String userID,String typ,String qantity) 
 	{
-		AccountDAO db;
+		IAccountDAO db;
 		try {
 			db = new AccountDAO();
 			db.insert(Integer.valueOf(userID),Double.valueOf(qantity),CurrencyType.valueOf(typ));
@@ -87,7 +90,7 @@ public class MainService {
 	 
 	public static String getUserName(int id)
 	{
-		UserDAO db;
+		IUserDAO db;
 		try {
 			db = new UserDAO();
 			return db.find(id).getName();
@@ -103,7 +106,7 @@ public class MainService {
 	
 	public static String getAccountCurrencyName(int account_id)
 	{
-		AccountDAO db;
+		IAccountDAO db;
 		try {
 			db = new AccountDAO();
 			return db.getAccountCurrencyName(account_id);
@@ -119,10 +122,14 @@ public class MainService {
 	
 	public static boolean AddTransaction(String account_id,double value)
 	{
-		MyTransactionDAO db;
+		IMyTransactionDAO db;
+		IAccountDAO account_db;
 		try {
+			int id = Integer.valueOf(account_id);
 			db = new MyTransactionDAO();
-			db.insert(Integer.valueOf(account_id),value);
+			account_db = new AccountDAO();
+			db.insert(id,value);
+			account_db.update(id,value);
 			return true;
 		} catch (ClassNotFoundException e) {			
 			e.printStackTrace();

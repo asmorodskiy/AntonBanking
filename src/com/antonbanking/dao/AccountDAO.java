@@ -26,6 +26,8 @@ public class AccountDAO extends MySQLDAO implements IAccountDAO{
 	
 	public static final String deleteUserDic="delete from userDic where account_id=?;";
 	
+	public static final String updateAccountvalue="update accounts set quantity=? where id=?;";
+	
 	
 	public AccountDAO() throws ClassNotFoundException, SQLException {
 		super();	
@@ -56,6 +58,16 @@ public class AccountDAO extends MySQLDAO implements IAccountDAO{
 		}
 	}
 	
+	
+	public int update(int id,double transactionValue) throws SQLException, ClassNotFoundException
+	{
+		PreparedStatement statement=getPreparedStatement(updateAccountvalue);
+		Account account = find(id);
+		double newQuantity= account.getQantity()+transactionValue;
+		statement.setDouble(1,newQuantity);
+		statement.setInt(2,id);
+		return statement.executeUpdate();
+	}
 	
 	public void delete(int id) throws SQLException {
 		ExecutePreparedStatement(deleteAccount,String.valueOf(id));
