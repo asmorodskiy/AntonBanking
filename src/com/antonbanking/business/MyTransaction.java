@@ -4,6 +4,9 @@ import java.sql.Date;
 
 public class MyTransaction {	
 	
+	/**
+	 * @uml.property  name="id"
+	 */
 	private int id;
 	
 	public int getID() {
@@ -12,6 +15,10 @@ public class MyTransaction {
 	
 	public void setID(int id) { this.id=id;}
 
+	/**
+	 * @return
+	 * @uml.property  name="date"
+	 */
 	public Date getDate() {
 		return date;
 	}
@@ -21,6 +28,10 @@ public class MyTransaction {
 		return date.toString();
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="value"
+	 */
 	public double getValue() {
 		return value;
 	}
@@ -29,8 +40,14 @@ public class MyTransaction {
 		return String.valueOf(value);
 	}
 
+	/**
+	 * @uml.property  name="date"
+	 */
 	private Date date;
 	
+	/**
+	 * @uml.property  name="value"
+	 */
 	private double value;	
 	
 	public MyTransaction(double val) {

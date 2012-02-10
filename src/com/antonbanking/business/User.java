@@ -5,10 +5,20 @@ import java.util.List;
 
 public class User {
 	
+	/**
+	 * @uml.property  name="name"
+	 */
 	private String name;
 
+	/**
+	 * @uml.property  name="id"
+	 */
 	private int id;
 	
+	/**
+	 * @uml.property  name="allAccounts"
+	 * @uml.associationEnd  multiplicity="(0 -1)" elementType="com.antonbanking.business.Account"
+	 */
 	private ArrayList<Account> allAccounts;
 	
 	public User() {		
@@ -34,17 +44,33 @@ public class User {
 		allAccounts.addAll(in_array); 
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="id"
+	 */
 	public int getId() { return id; }
 	
+	/**
+	 * @param id
+	 * @uml.property  name="id"
+	 */
 	public void setId(int id)
 	{
 		this.id=id;
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="name"
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @param name
+	 * @uml.property  name="name"
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}

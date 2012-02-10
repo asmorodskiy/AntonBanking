@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 public class Account {
 	
+	/**
+	 * @uml.property  name="quantity"
+	 */
 	private double quantity;	
 	
 
@@ -14,6 +17,10 @@ public class Account {
 		return quantity+=change;
 	}
 
+	/**
+	 * @param quantity
+	 * @uml.property  name="quantity"
+	 */
 	public void setQuantity(double quantity) {
 		
 		transactions.clear();
@@ -36,6 +43,10 @@ public class Account {
 		return typ.getName();
 	}	
 
+	/**
+	 * @return
+	 * @uml.property  name="id"
+	 */
 	public int getId() {
 		return id;
 	}
@@ -44,6 +55,10 @@ public class Account {
 		return String.valueOf(id);
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="typ"
+	 */
 	public CurrencyType getTyp() {
 		return typ;
 	}	
@@ -53,8 +68,19 @@ public class Account {
 		transactions.add(in);		
 	}
 
+	/**
+	 * @uml.property  name="id"
+	 */
 	private int id;
+	/**
+	 * @uml.property  name="typ"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private CurrencyType typ;
+	/**
+	 * @uml.property  name="transactions"
+	 * @uml.associationEnd  multiplicity="(0 -1)" elementType="com.antonbanking.business.MyTransaction"
+	 */
 	private ArrayList<MyTransaction> transactions;
 	
 	public void setID(int id)

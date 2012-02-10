@@ -16,6 +16,9 @@ public class MySQLDAO {
 	
 	public static final String DBURL="jdbc:mysql://localhost/antonbanking?user=root&password=root";
 	 
+	/**
+	 * @uml.property  name="conn"
+	 */
 	private Connection conn; 
 
 	public MySQLDAO()  throws ClassNotFoundException, SQLException  
