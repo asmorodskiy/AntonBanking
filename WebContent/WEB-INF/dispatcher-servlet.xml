@@ -15,7 +15,7 @@
 		<property name="dataSource" ref="myDataSource" />
 		<property name="annotatedClasses">
 			<list>
-				<value> </value>
+				<value>com.antonbanking.dao.MyTransactionsORM</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
