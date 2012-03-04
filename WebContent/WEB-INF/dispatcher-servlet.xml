@@ -16,6 +16,8 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>com.antonbanking.dao.MyTransactionsORM</value>
+				<value>com.antonbanking.dao.AccountORM</value>
+				<value>com.antonbanking.dao.UserORM</value>				
 			</list>
 		</property>
 		<property name="hibernateProperties">

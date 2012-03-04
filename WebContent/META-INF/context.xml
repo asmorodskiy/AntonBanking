@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/alp-reporter-fe">
-
-<<<<<<< HEAD
 	<Resource name="jdbc/antonbanking" auth="Container" type="javax.sql.DataSource"
 		username="root"
 		password="root" 
 		driverClassName="com.mysql.jdbc.Driver"
 		url="jdbc:mysql://127.0.0.1/antonbanking" />
-=======
-	<Resource name="jdbc/reporter" auth="Container" type="javax.sql.DataSource"
-		username="root"
-		password="root" 
-		driverClassName="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://rezik/antonbanking" />
->>>>>>> 7da3a7f7df2a3600fcc10ee88dac88997e1a71ca
 </Context>

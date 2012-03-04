@@ -12,21 +12,24 @@ import javax.persistence.Table;
 @Table(name = "mytransactions")
 public class MyTransactionsORM {
 
-	private Long id;
+	private Long trans_id;
 
 	private Double value;
 
 	private Date date;
 
-	@Id
-	@GeneratedValue
-	@Column(name = "id")
-	public Long getId() {
-		return id;
+	public MyTransactionsORM() {
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	@Id
+	@GeneratedValue
+	@Column(name = "trans_id")
+	public Long getTrans_id() {
+		return trans_id;
+	}
+
+	public void setTrans_id(Long id) {
+		this.trans_id = id;
 	}
 
 	@Column(name = "value")
@@ -38,7 +41,7 @@ public class MyTransactionsORM {
 		this.value = value;
 	}
 
-	@Column(name = "date")
+	@Column(name = "date", nullable = false)
 	public Date getDate() {
 		return date;
 	}
