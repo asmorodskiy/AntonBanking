@@ -1,4 +1,4 @@
-package com.antonbanking.dao;
+package com.antonbanking.orm;
 
 import java.util.HashSet;
 import java.util.Set;

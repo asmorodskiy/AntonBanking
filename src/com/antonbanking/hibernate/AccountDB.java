@@ -4,55 +4,43 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.antonbanking.business.Account;
-import com.antonbanking.business.CurrencyType;
-import com.antonbanking.dao.IAccountDAO;
+import com.antonbanking.business.MyTransaction;
 
-public class AccountDB implements IAccountDAO {
+public class AccountDB {
 
-	@Override
-	public Account insert(int user_id, double quantity, CurrencyType typ)
-			throws SQLException, ClassNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public void insert(Account account) {
+    }
 
-	@Override
-	public int update(int id, double transactionValue) throws SQLException,
-			ClassNotFoundException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    public void update(Account account) throws SQLException,
+	    ClassNotFoundException {
+    }
 
-	@Override
-	public void delete(int id) throws SQLException {
-		// TODO Auto-generated method stub
+    public void delete(Account account) throws SQLException {
+	// TODO Auto-generated method stub
 
-	}
+    }
 
-	@Override
-	public Account find(int id) throws SQLException, ClassNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public Account find(int account_id) throws SQLException,
+	    ClassNotFoundException {
+	// TODO Auto-generated method stub
+	return null;
+    }
 
-	@Override
-	public ArrayList<Integer> getAccountIDs(int user_id) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public ArrayList<MyTransaction> getAllMyTransactionsByID(int account_id)
+	    throws SQLException {
+	// TODO Auto-generated method stub
+	return null;
+    }
 
-	@Override
-	public ArrayList<Account> getAllAccountsByID(int user_id)
-			throws SQLException, ClassNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public ArrayList<Integer> getAccountIDs(int user_id) throws SQLException {
+	// TODO Auto-generated method stub
+	return null;
+    }
 
-	@Override
-	public String getAccountCurrencyName(int accountId) throws SQLException,
-			ClassNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public String getAccountCurrencyName(int accountId) throws SQLException,
+	    ClassNotFoundException {
+	// TODO Auto-generated method stub
+	return null;
+    }
 
 }

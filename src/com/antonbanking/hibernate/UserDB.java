@@ -2,37 +2,56 @@ package com.antonbanking.hibernate;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
+import org.hibernate.SessionFactory;
+import org.springframework.orm.hibernate3.HibernateTemplate;
+
+import com.antonbanking.business.Account;
 import com.antonbanking.business.User;
-import com.antonbanking.dao.IUserDAO;
+import com.antonbanking.orm.AccountORM;
+import com.antonbanking.orm.UserORM;
 
+public class UserDB {
 
-//@Entity
-public class UserDB implements IUserDAO {
+    private HibernateTemplate hibernateTemplate;
 
-	@Override
-	public User insert(String username) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.hibernateTemplate = new HibernateTemplate(sessionFactory);
+    }
+
+    public void insert(User user) throws SQLException {
+	UserORM userORM = new UserORM();
+	userORM.setName(user.getName());
+	Set<AccountORM> accountsSet =  new HashSet<AccountORM>();
+	
+	for(Account account: user.getAllAccounts())
+	{
+	    AccountORM accountORM = new 
 	}
+	
+    }
 
-	@Override
-	public void delete(int id) throws SQLException, ClassNotFoundException {
-		// TODO Auto-generated method stub
+    public void update(User user) throws SQLException {
 
-	}
+    }
 
-	@Override
-	public User find(int id) throws SQLException, ClassNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public User find(int user_id) throws SQLException, ClassNotFoundException {
+	// TODO Auto-generated method stub
+	return null;
+    }
 
-	@Override
-	public ArrayList<User> findAll() throws SQLException,
-			ClassNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public ArrayList<User> findAll() throws SQLException,
+	    ClassNotFoundException {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    public ArrayList<Account> getAllAccountsByID(int user_id)
+	    throws SQLException, ClassNotFoundException {
+	// TODO Auto-generated method stub
+	return null;
+    }
 
 }

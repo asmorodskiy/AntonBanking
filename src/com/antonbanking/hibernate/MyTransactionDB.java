@@ -7,47 +7,38 @@ import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import com.antonbanking.business.MyTransaction;
-import com.antonbanking.dao.IMyTransactionDAO;
 
 public class MyTransactionDB implements IMyTransactionDAO {
 
-	private HibernateTemplate hibernateTemplate;
+    private HibernateTemplate hibernateTemplate;
 
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
-	}
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.hibernateTemplate = new HibernateTemplate(sessionFactory);
+    }
 
-	@Override
-	public MyTransaction insert(int account_id, double val) throws SQLException {
-		// / What to do with account_id here ?
-		MyTransaction to_ret = new MyTransaction(val);
-		hibernateTemplate.saveOrUpdate(to_ret);
-		return to_ret;
-	}
+    @Override
+    public MyTransaction insert(int account_id, double val) throws SQLException {
+	MyTransaction to_ret = new MyTransaction(val);
+	hibernateTemplate.saveOrUpdate(to_ret);
+	return to_ret;
+    }
 
-	@Override
-	public void delete(int trans_id) throws SQLException {
+    @Override
+    public void delete(int trans_id) throws SQLException {
+	MyTransaction tr1 = find(trans_id);
+	hibernateTemplate.delete(tr1);
+    }
 
-	}
+    @Override
+    public MyTransaction find(int trans_id) throws SQLException {
+	return hibernateTemplate.load(MyTransaction.class, new Long(trans_id));
+    }
 
-	@Override
-	public MyTransaction find(int trans_id) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<Integer> getMyTransactionIDs(int acc_id)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<MyTransaction> getAllMyTransactionsByID(int account_id)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public ArrayList<Integer> getMyTransactionIDs(int acc_id)
+	    throws SQLException {
+	// TODO Auto-generated method stub
+	return null;
+    }
 
 }
