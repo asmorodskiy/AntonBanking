@@ -2,118 +2,109 @@ package com.antonbanking.business;
 
 import java.util.ArrayList;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "accounts")
 public class Account {
-	
-	/**
-	 * @uml.property  name="quantity"
-	 */
-	private double quantity;	
-	
 
-	public double changeQuantity(double change) {
-		
-		transactions.add(new MyTransaction(change));
-		
-		return quantity+=change;
-	}
+    private double quantity;
 
-	/**
-	 * @param quantity
-	 * @uml.property  name="quantity"
-	 */
-	public void setQuantity(double quantity) {
-		
-		transactions.clear();
-		
-		this.quantity = quantity;
-	}
-	
-	public double getQantity()
-	{
-		return quantity;
-	}
-	
-	public String getQanstr()
-	{
-		return String.valueOf(quantity);
-	}
-	
-	public String getTypstr()
-	{
-		return typ.getName();
-	}	
+    public double changeQuantity(double change) {
 
-	/**
-	 * @return
-	 * @uml.property  name="id"
-	 */
-	public int getId() {
-		return id;
-	}
-	
-	public String getIdstr() {
-		return String.valueOf(id);
-	}
+	transactions.add(new MyTransaction(change));
 
-	/**
-	 * @return
-	 * @uml.property  name="typ"
-	 */
-	public CurrencyType getTyp() {
-		return typ;
-	}	
-	
-	public void addTransaction(MyTransaction in)
-	{
-		transactions.add(in);		
-	}
+	return quantity += change;
+    }
 
-	/**
-	 * @uml.property  name="id"
-	 */
-	private int id;
-	/**
-	 * @uml.property  name="typ"
-	 * @uml.associationEnd  multiplicity="(1 1)"
-	 */
-	private CurrencyType typ;
-	/**
-	 * @uml.property  name="transactions"
-	 * @uml.associationEnd  multiplicity="(0 -1)" elementType="com.antonbanking.business.MyTransaction"
-	 */
-	private ArrayList<MyTransaction> transactions;
-	
-	public void setID(int id)
-	{
-		this.id=id;
-	}
-	
-	public void setTransactions(double quantity,ArrayList<MyTransaction> tr)
-	{
-		this.quantity=quantity;
-		transactions=tr;
-	}
-	
-	public Account(){		
-		typ = CurrencyType.hrivna;
-		quantity = 0;
-		transactions = new ArrayList<MyTransaction>();
-	}
-	
-	public Account(CurrencyType in_typ){
-		quantity = 0;
-		typ = in_typ;
-		transactions = new ArrayList<MyTransaction>();
-	}
-	
-	public Account(CurrencyType in_typ,ArrayList<MyTransaction> in_arr){		
-		quantity = 0;
-		typ = in_typ;
-		transactions.addAll(in_arr);
-	}		 
+    public void setQuantity(double quantity) {
 
-	public boolean sameCurrency(CurrencyType in)
-	{
-		return typ.equals(in);
-	}
+	transactions.clear();
+
+	this.quantity = quantity;
+    }
+
+    @Column(name = "quantity")
+    public double getQantity() {
+	return quantity;
+    }
+
+    public String getQanstr() {
+	return String.valueOf(quantity);
+    }
+
+    public String getTypstr() {
+	return typ.getName();
+    }
+
+    public String getIdstr() {
+	return String.valueOf(acc_id);
+    }
+
+    @Column(name = "typ")
+    public CurrencyType getTyp() {
+	return typ;
+    }
+
+    public void addTransaction(MyTransaction in) {
+	transactions.add(in);
+    }
+
+    private Long acc_id;
+
+    private CurrencyType typ;
+
+    private ArrayList<MyTransaction> transactions;
+
+    public void setTransactions(double quantity, ArrayList<MyTransaction> tr) {
+	this.quantity = quantity;
+	transactions = tr;
+    }
+
+    public Account() {
+	typ = CurrencyType.hrivna;
+	quantity = 0;
+	transactions = new ArrayList<MyTransaction>();
+    }
+
+    public Account(CurrencyType in_typ) {
+	quantity = 0;
+	typ = in_typ;
+	transactions = new ArrayList<MyTransaction>();
+    }
+
+    public Account(CurrencyType in_typ, ArrayList<MyTransaction> in_arr) {
+	quantity = 0;
+	typ = in_typ;
+	transactions.addAll(in_arr);
+    }
+
+    public boolean sameCurrency(CurrencyType in) {
+	return typ.equals(in);
+    }
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "mytransactionsDic", joinColumns = { @JoinColumn(name = "acc_id") }, inverseJoinColumns = { @JoinColumn(name = "trans_id") })
+    public ArrayList<MyTransaction> getTransactions() {
+	return transactions;
+    }
+
+    @Id
+    @GeneratedValue
+    @Column(name = "acc_id")
+    public Long getAcc_id() {
+	return acc_id;
+    }
+
+    public void setAcc_id(Long acc_id) {
+	this.acc_id = acc_id;
+    }
 }

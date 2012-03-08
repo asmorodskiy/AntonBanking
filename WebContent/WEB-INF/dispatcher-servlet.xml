@@ -15,9 +15,9 @@
 		<property name="dataSource" ref="myDataSource" />
 		<property name="annotatedClasses">
 			<list>
-				<value>com.antonbanking.dao.MyTransactionsORM</value>
-				<value>com.antonbanking.dao.AccountORM</value>
-				<value>com.antonbanking.dao.UserORM</value>				
+				<value>com.antonbanking.hibernate.MyTransactionsDB</value>
+				<value>com.antonbanking.hibernate.AccountDB</value>
+				<value>com.antonbanking.hibernate.UserDB</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -28,11 +28,4 @@
 			</props>
 		</property>
 	</bean>
-
-
-
-	<bean id="myUserDAO" class="com.vaannila.dao.UserDAOImpl">
-		<property name="sessionFactory" ref="mySessionFactory" />
-	</bean>
-
 </beans>
