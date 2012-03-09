@@ -8,9 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.antonbanking.hibernate.UserDB;
 import com.antonbanking.service.MainService;
 
 public class AddAccountServlet extends HttpServlet{
+    
+    @Autowired
+    private UserDB userDB;
 
 	/**
 	 * 
@@ -24,7 +30,7 @@ public class AddAccountServlet extends HttpServlet{
 		if(session!=null) 
 		{
 			String userid=(String)session.getAttribute("ATMUserID");
-			MainService.AddAccount(userid,(String)request.getParameter("CurrencyTypes"),request.getParameter("ATMQuantity"));				
+			MainService.AddAccount(userid,(String)request.getParameter("CurrencyTypes"),request.getParameter("ATMQuantity"),userDB);				
 			response.sendRedirect(String.format("/AntonBanking/AccountsServlet?ATMUserID=%s",userid));
 		}			
 	}

@@ -8,12 +8,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.antonbanking.hibernate.UserDB;
 import com.antonbanking.service.MainService;
 
 
 // store userid in context of session
 
 public class AdminServlet extends HttpServlet {
+    
+    @Autowired
+    private UserDB userDB;
 
 	/**
 	 * 
@@ -24,7 +30,7 @@ public class AdminServlet extends HttpServlet {
 			throws ServletException, IOException {		
 
 		try {	
-			request.setAttribute("ATMUsers",MainService.getAllUsers());
+			request.setAttribute("ATMUsers",MainService.getAllUsers(userDB));
 			request.getRequestDispatcher("index.jsp").forward(request,response);
 		} catch (ClassNotFoundException e) {			
 			request.getRequestDispatcher("error.html").forward(request,response);

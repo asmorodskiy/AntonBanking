@@ -8,9 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.antonbanking.hibernate.AccountDB;
 import com.antonbanking.service.MainService;
 
 public class AddMyTransactionServlet extends HttpServlet {
+    
+    @Autowired
+    private AccountDB accountDB;
 
 	/**
 	 * 
@@ -39,13 +45,13 @@ public class AddMyTransactionServlet extends HttpServlet {
 					else
 					{ 
 						value = - Double.valueOf(tmp);
-						MainService.AddTransaction(accountId,value);
+						MainService.AddTransaction(accountId,value,accountDB);
 					}
 				}
 				else 
 				{
 					value = Double.valueOf(tmp);
-					MainService.AddTransaction(accountId,value);
+					MainService.AddTransaction(accountId,value,accountDB);
 				}								
 				response.sendRedirect(String.format("/AntonBanking/MyTransactionServlet?ATMUserID=%s&ATMAccountID=%s",userid,accountId));
 			} 

@@ -7,10 +7,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.antonbanking.hibernate.UserDB;
 import com.antonbanking.service.MainService;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class AddUserServlet extends HttpServlet {
+    
+    @Autowired
+    private UserDB userDB;
 
 	/**
 	 * 
@@ -23,7 +28,7 @@ public class AddUserServlet extends HttpServlet {
 			boolean passed = true;
 			String NewUser = request.getParameter("ATMNewUser");
 			passed =  StringUtils.isNotBlank(NewUser);
-			if(passed) passed=MainService.AddUser(NewUser);
+			if(passed) passed=MainService.AddUser(NewUser,userDB);
 			if(!passed) response.sendRedirect("/AntonBanking/AdminServlet?error=error!");
 			response.sendRedirect("/AntonBanking/AdminServlet");
 	}

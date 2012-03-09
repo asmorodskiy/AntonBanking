@@ -9,10 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.antonbanking.business.CurrencyType;
+import com.antonbanking.hibernate.UserDB;
 import com.antonbanking.service.MainService;
 
 public class AccountsServlet extends HttpServlet{
+    
+    @Autowired
+    private UserDB userDB;
 
 	/**
 	 * 
@@ -29,8 +35,8 @@ public class AccountsServlet extends HttpServlet{
 			CurrencyType[] currency_arr= CurrencyType.values();
 			for(CurrencyType val1 : currency_arr)
 				to_jsp.add(val1.getName());
-			String usr_name = MainService.getUserName(userId);
-			request.setAttribute("ATMAccounts",MainService.getAllAccounts(userId));
+			String usr_name = MainService.getUserName(userId,userDB);
+			request.setAttribute("ATMAccounts",MainService.getAllAccounts(userId,userDB));
 			request.setAttribute("ATMCurrencyTypes",to_jsp);			 			
 			request.setAttribute("ATMUserName",usr_name);
 			
