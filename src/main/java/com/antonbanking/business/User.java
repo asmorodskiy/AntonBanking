@@ -1,6 +1,7 @@
 package com.antonbanking.business;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,13 +17,23 @@ import javax.persistence.Table;
 @Table(name = "user")
 public class User {
 
+    @Column(name = "name")
     private String name;
 
+    @Id
+    @GeneratedValue
+    @Column(name = "user_id")
     private Long userID;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "userDic", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "acc_id") })
     private ArrayList<Account> allAccounts;
 
     public User() {
+
+	Random rand = new Random(System.currentTimeMillis());
+
+	userID = rand.nextLong() % 9;
 
 	name = "DefaultUser" + userID;
 
@@ -45,7 +56,6 @@ public class User {
 	allAccounts.addAll(in_array);
     }
 
-    @Column(name = "name")
     public String getName() {
 	return name;
     }
@@ -80,9 +90,6 @@ public class User {
 	return false;
     }
 
-    @Id
-    @GeneratedValue
-    @Column(name = "user_id")
     public Long getUserID() {
 	return userID;
     }
@@ -91,8 +98,6 @@ public class User {
 	this.userID = userID;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "userDic", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "acc_id") })
     public ArrayList<Account> getAllAccounts() {
 	return allAccounts;
     }

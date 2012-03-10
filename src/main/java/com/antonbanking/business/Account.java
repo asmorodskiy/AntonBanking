@@ -16,6 +16,7 @@ import javax.persistence.Table;
 @Table(name = "accounts")
 public class Account {
 
+    @Column(name = "quantity")
     private double quantity;
 
     public double changeQuantity(double change) {
@@ -32,7 +33,6 @@ public class Account {
 	this.quantity = quantity;
     }
 
-    @Column(name = "quantity")
     public double getQantity() {
 	return quantity;
     }
@@ -49,7 +49,6 @@ public class Account {
 	return String.valueOf(acc_id);
     }
 
-    @Column(name = "typ")
     public CurrencyType getTyp() {
 	return typ;
     }
@@ -58,10 +57,16 @@ public class Account {
 	transactions.add(in);
     }
 
+    @Id
+    @GeneratedValue
+    @Column(name = "acc_id")
     private Long acc_id;
 
+    @Column(name = "typ")
     private CurrencyType typ;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "mytransactionsDic", joinColumns = { @JoinColumn(name = "acc_id") }, inverseJoinColumns = { @JoinColumn(name = "trans_id") })
     private ArrayList<MyTransaction> transactions;
 
     public void setTransactions(double quantity, ArrayList<MyTransaction> tr) {
@@ -81,25 +86,14 @@ public class Account {
 	transactions = new ArrayList<MyTransaction>();
     }
 
-    public Account(CurrencyType in_typ, ArrayList<MyTransaction> in_arr) {
-	quantity = 0;
-	typ = in_typ;
-	transactions.addAll(in_arr);
-    }
-
     public boolean sameCurrency(CurrencyType in) {
 	return typ.equals(in);
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "mytransactionsDic", joinColumns = { @JoinColumn(name = "acc_id") }, inverseJoinColumns = { @JoinColumn(name = "trans_id") })
     public ArrayList<MyTransaction> getTransactions() {
 	return transactions;
     }
 
-    @Id
-    @GeneratedValue
-    @Column(name = "acc_id")
     public Long getAcc_id() {
 	return acc_id;
     }

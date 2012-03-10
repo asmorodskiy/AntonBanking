@@ -12,9 +12,11 @@ import javax.persistence.Table;
 @Table(name = "mytransactions")
 public class MyTransaction {
 
+    @Id
+    @GeneratedValue
+    @Column(name = "trans_id")
     private Long trans_id;
 
-    @Column(name = "date", nullable = false)
     public Date getDate() {
 	return date;
     }
@@ -23,7 +25,6 @@ public class MyTransaction {
 	return date.toString();
     }
 
-    @Column(name = "value")
     public double getValue() {
 	return value;
     }
@@ -32,8 +33,10 @@ public class MyTransaction {
 	return String.valueOf(value);
     }
 
+    @Column(name = "date", nullable = false)
     private Date date;
 
+    @Column(name = "value")
     private double value;
 
     public MyTransaction() {
@@ -58,9 +61,6 @@ public class MyTransaction {
 		trans_id, date.toString(), value);
     }
 
-    @Id
-    @GeneratedValue
-    @Column(name = "trans_id")
     public Long getTrans_id() {
 	return trans_id;
     }
