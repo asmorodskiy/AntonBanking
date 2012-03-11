@@ -1,6 +1,7 @@
 package com.antonbanking.business;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -67,9 +68,9 @@ public class Account {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "mytransactionsDic", joinColumns = { @JoinColumn(name = "acc_id") }, inverseJoinColumns = { @JoinColumn(name = "trans_id") })
-    private ArrayList<MyTransaction> transactions;
+    private Set<MyTransaction> transactions;
 
-    public void setTransactions(double quantity, ArrayList<MyTransaction> tr) {
+    public void setTransactions(double quantity, Set<MyTransaction> tr) {
 	this.quantity = quantity;
 	transactions = tr;
     }
@@ -77,20 +78,20 @@ public class Account {
     public Account() {
 	typ = CurrencyType.hrivna;
 	quantity = 0;
-	transactions = new ArrayList<MyTransaction>();
+	transactions = new HashSet<MyTransaction>();
     }
 
     public Account(CurrencyType in_typ) {
 	quantity = 0;
 	typ = in_typ;
-	transactions = new ArrayList<MyTransaction>();
+	transactions = new HashSet<MyTransaction>();
     }
 
     public boolean sameCurrency(CurrencyType in) {
 	return typ.equals(in);
     }
 
-    public ArrayList<MyTransaction> getTransactions() {
+    public Set<MyTransaction> getTransactions() {
 	return transactions;
     }
 

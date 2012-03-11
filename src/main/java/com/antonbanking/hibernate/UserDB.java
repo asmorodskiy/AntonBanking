@@ -1,10 +1,10 @@
 package com.antonbanking.hibernate;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.classic.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -37,19 +37,20 @@ public class UserDB {
 	return (User) currentSession().get(User.class, new Long(user_id));
     }
 
+    @SuppressWarnings("unchecked")
     public ArrayList<User> findAll() {
-	List<User> lst = currentSession().createQuery("from user").list();
-	return new ArrayList<User>(lst);
+	return (ArrayList<User>) currentSession().createQuery("from user")
+		.list();
     }
 
-    public ArrayList<Account> getAllAccountsByID(int user_id) {
+    public Set<Account> getAllAccountsByID(int user_id) {
 	User user = find(user_id);
 	return user.getAllAccounts();
     }
 
     public ArrayList<Long> getAccountIDs(int user_id) {
 	User user = find(user_id);
-	ArrayList<Account> accounts = user.getAllAccounts();
+	Set<Account> accounts = user.getAllAccounts();
 	ArrayList<Long> ids = new ArrayList<Long>();
 	for (Account acc : accounts)
 	    ids.add(acc.getAcc_id());

@@ -6,15 +6,16 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-
-	<bean id="viewResolver"
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" />
+	<bean id="jspViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
 
 	<context:annotation-config />
-	<context:component-scan base-package="com.antonbanking" />
-
-	<tx:annotation-driven transaction-manager="hibernateTransactionManager" />
+	<context:component-scan base-package="com.antonbanking" />	
 
 	<bean id="myDataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -27,13 +28,7 @@
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="myDataSource" />
-		<property name="annotatedClasses">
-			<list>
-				<value>com.antonbanking.hibernate.MyTransactionsDB</value>
-				<value>com.antonbanking.hibernate.AccountDB</value>
-				<value>com.antonbanking.hibernate.UserDB</value>
-			</list>
-		</property>
+		<property name="packagesToScan" value="com.antonbanking.business" />		
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</prop>
@@ -42,10 +37,12 @@
 			</props>
 		</property>
 	</bean>
-
+	
+	<tx:annotation-driven transaction-manager="hibernateTransactionManager" />
 	<bean id="hibernateTransactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-
+		
+	<bean id="MainService" class="com.antonbanking.service.MainService"/>
 </beans>

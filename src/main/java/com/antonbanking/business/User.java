@@ -1,7 +1,9 @@
 package com.antonbanking.business;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,7 +29,7 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "userDic", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "acc_id") })
-    private ArrayList<Account> allAccounts;
+    private Set<Account> allAccounts;
 
     public User() {
 
@@ -37,21 +39,21 @@ public class User {
 
 	name = "DefaultUser" + userID;
 
-	allAccounts = new ArrayList<Account>();
+	allAccounts = new HashSet<Account>();
     }
 
     public User(String in_Name) {
 
 	name = in_Name;
 
-	allAccounts = new ArrayList<Account>();
+	allAccounts = new HashSet<Account>();
     }
 
     public User(String in_Name, ArrayList<Account> in_array) {
 
 	name = in_Name;
 
-	allAccounts = new ArrayList<Account>();
+	allAccounts = new HashSet<Account>();
 
 	allAccounts.addAll(in_array);
     }
@@ -98,11 +100,11 @@ public class User {
 	this.userID = userID;
     }
 
-    public ArrayList<Account> getAllAccounts() {
+    public Set<Account> getAllAccounts() {
 	return allAccounts;
     }
 
-    public void setAllAccounts(ArrayList<Account> allAccounts) {
+    public void setAllAccounts(Set<Account> allAccounts) {
 	this.allAccounts = allAccounts;
     }
 

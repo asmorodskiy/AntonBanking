@@ -4,51 +4,45 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.antonbanking.business.CurrencyType;
 import com.antonbanking.hibernate.UserDB;
 import com.antonbanking.service.MainService;
 
-public class AccountsServlet extends HttpServlet{
-    
+@Controller
+public class AccountsServlet {
+
     @Autowired
     private UserDB userDB;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3083452516228510428L;
-	
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {		
-		HttpSession session = request.getSession(false);
-		if(session!=null)
-		{
-			int userId = Integer.valueOf(request.getParameter("ATMUserID"));
-			ArrayList<String> to_jsp = new ArrayList<String>();
-			CurrencyType[] currency_arr= CurrencyType.values();
-			for(CurrencyType val1 : currency_arr)
-				to_jsp.add(val1.getName());
-			String usr_name = MainService.getUserName(userId,userDB);
-			request.setAttribute("ATMAccounts",MainService.getAllAccounts(userId,userDB));
-			request.setAttribute("ATMCurrencyTypes",to_jsp);			 			
-			request.setAttribute("ATMUserName",usr_name);
-			
-			session.setAttribute("ATMUserID",request.getParameter("ATMUserID"));			
-			
-			request.getRequestDispatcher("accounts.jsp").forward(request,response);
-		} 
-	}
+    @RequestMapping
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+	    throws ServletException, IOException {
+	HttpSession session = request.getSession(false);
+	if (session != null) {
+	    int userId = Integer.valueOf(request.getParameter("ATMUserID"));
+	    ArrayList<String> to_jsp = new ArrayList<String>();
+	    CurrencyType[] currency_arr = CurrencyType.values();
+	    for (CurrencyType val1 : currency_arr)
+		to_jsp.add(val1.getName());
+	    String usr_name = MainService.getUserName(userId, userDB);
+	    request.setAttribute("ATMAccounts",
+		    MainService.getAllAccounts(userId, userDB));
+	    request.setAttribute("ATMCurrencyTypes", to_jsp);
+	    request.setAttribute("ATMUserName", usr_name);
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doGet(request, response);
+	    session.setAttribute("ATMUserID", request.getParameter("ATMUserID"));
+
+	    request.getRequestDispatcher("accounts.jsp").forward(request,
+		    response);
 	}
+    }
 
 }

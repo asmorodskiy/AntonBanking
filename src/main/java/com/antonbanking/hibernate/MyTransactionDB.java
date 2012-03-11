@@ -1,23 +1,30 @@
 package com.antonbanking.hibernate;
 
 import org.hibernate.SessionFactory;
-import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.hibernate.classic.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.antonbanking.business.MyTransaction;
 
 public class MyTransactionDB {
 
-    private HibernateTemplate hibernateTemplate;
+    private SessionFactory sessionFactory;
 
-    public void setSessionFactory(SessionFactory sessionFactory) {
-	this.hibernateTemplate = new HibernateTemplate(sessionFactory);
+    @Autowired
+    public MyTransactionDB(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
+
+    private Session currentSession() {
+	return sessionFactory.getCurrentSession();
     }
 
     public void insert(MyTransaction transaction) {
-	hibernateTemplate.save(transaction);
+	currentSession().save(transaction);
     }
 
     public MyTransaction find(int trans_id) {
-	return hibernateTemplate.load(MyTransaction.class, new Long(trans_id));
+	return (MyTransaction) currentSession().createQuery(
+		"from mytransactions").list();
     }
 }

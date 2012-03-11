@@ -1,34 +1,42 @@
 package com.antonbanking.hibernate;
 
-import java.util.ArrayList;
+import java.util.Set;
 
 import org.hibernate.SessionFactory;
-import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.hibernate.classic.Session;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.antonbanking.business.Account;
 import com.antonbanking.business.MyTransaction;
 
+@Repository
 public class AccountDB {
 
-    private HibernateTemplate hibernateTemplate;
+    private SessionFactory sessionFactory;
 
-    public void setSessionFactory(SessionFactory sessionFactory) {
-	this.hibernateTemplate = new HibernateTemplate(sessionFactory);
+    @Autowired
+    public AccountDB(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
+
+    private Session currentSession() {
+	return sessionFactory.getCurrentSession();
     }
 
     public void insert(Account account) {
-	hibernateTemplate.save(account);
+	currentSession().save(account);
     }
 
     public void update(Account account) {
-	hibernateTemplate.update(account);
+	currentSession().update(account);
     }
 
     public Account find(int account_id) {
-	return hibernateTemplate.load(Account.class, new Long(account_id));
+	return (Account) currentSession().createQuery("from accounts").list();
     }
 
-    public ArrayList<MyTransaction> getAllMyTransactionsByID(int account_id) {
+    public Set<MyTransaction> getAllMyTransactionsByID(int account_id) {
 	Account account = find(account_id);
 	return account.getTransactions();
     }

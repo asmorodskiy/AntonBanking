@@ -21,11 +21,15 @@
 	<c:if test="${error != null }">
 	<h1 size="23" color="red"> Shit happens </h1>	
 	</c:if>
-	<form method="get" action="AddUserServlet">
-		<input type="submit" value="Add User" />
-		<input type="text" name="ATMNewUser" />
-	</form>	
-	<form method="GET" action="AdminServlet">
+	<DIV>
+	<sf:form method="POST" modelAttribute="AntonBanking">
+		<fieldset>
+			<label for="user_name">User Name:</label>
+			<sf:input path="name" size="15" id="user_name" />
+		</fieldset>
+	</sf:form>
+	</DIV>	
+	<DIV>
 	<h1 align="center">List of Users</h1>	
 	<table id="UserList" cellspacing="0" cellpadding="0" border="1" align="center" >
 		<thead>
@@ -43,7 +47,7 @@
 			</c:forEach>
 		</TBODY>
 	</table>	
-	</form>
+	</DIV>
 </body>
 	</html>
 	</jsp:root>

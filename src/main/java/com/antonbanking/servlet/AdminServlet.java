@@ -1,49 +1,42 @@
 package com.antonbanking.servlet;
 
-import java.io.IOException;
 import java.sql.SQLException;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.antonbanking.hibernate.UserDB;
 import com.antonbanking.service.MainService;
 
-
 // store userid in context of session
 
-public class AdminServlet extends HttpServlet {
-    
+@Controller
+public class AdminServlet {
+
     @Autowired
     private UserDB userDB;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;	
-	
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {		
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String ShowAllUsers(Model model) throws ClassNotFoundException,
+	    SQLException {
 
-		try {	
-			request.setAttribute("ATMUsers",MainService.getAllUsers(userDB));
-			request.getRequestDispatcher("index.jsp").forward(request,response);
-		} catch (ClassNotFoundException e) {			
-			request.getRequestDispatcher("error.html").forward(request,response);
-		} catch (SQLException e) {
-			request.getRequestDispatcher("error.html").forward(request,response);			
-		}		
-		
+	model.addAttribute("ATMUsers", MainService.getAllUsers(userDB));
+	return "index";
+    }
 
-	}
-
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doGet(request, response);
-	}
+    @RequestMapping(method = RequestMethod.POST, params = "new")
+    public String AddUser(Model model,
+	    @RequestParam("ATMNewUser") String NewUser) {
+	boolean passed = true;
+	passed = StringUtils.isNotBlank(NewUser);
+	if (passed)
+	    passed = MainService.AddUser(NewUser, userDB);
+	return "/AntonBanking/Users";
+    }
 
 }
