@@ -1,42 +1,37 @@
 package com.antonbanking.servlet;
 
 import java.sql.SQLException;
+import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import com.antonbanking.business.User;
 import com.antonbanking.hibernate.UserDB;
 import com.antonbanking.service.MainService;
 
-// store userid in context of session
-
 @Controller
-public class AdminServlet {
-
-    @Autowired
-    private UserDB userDB;
+public class AdminServlet
+{
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String ShowAllUsers(Model model) throws ClassNotFoundException,
-	    SQLException {
-
-	model.addAttribute("ATMUsers", MainService.getAllUsers(userDB));
-	return "index";
+    public String ShowAllUsers(Model model) throws ClassNotFoundException, SQLException
+    {
+        UserDB userDB = new UserDB();
+        model.addAttribute("ATMUsers", MainService.getAllUsers(userDB));
+        return "index";
     }
 
-    @RequestMapping(method = RequestMethod.POST, params = "new")
-    public String AddUser(Model model,
-	    @RequestParam("ATMNewUser") String NewUser) {
-	boolean passed = true;
-	passed = StringUtils.isNotBlank(NewUser);
-	if (passed)
-	    passed = MainService.AddUser(NewUser, userDB);
-	return "/AntonBanking/Users";
+    @RequestMapping(method = RequestMethod.POST, value = "AddUser.html")
+    public String AddUser(User user, BindingResult result, Map model)
+    {
+        UserDB userDB = new UserDB();
+        MainService.AddUser(user.getName(), userDB);
+
+        return "index";
     }
 
 }

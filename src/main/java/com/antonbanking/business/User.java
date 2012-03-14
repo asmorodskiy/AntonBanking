@@ -15,9 +15,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity
+@Entity(name = "user")
 @Table(name = "user")
-public class User {
+public class User
+{
 
     @Column(name = "name")
     private String name;
@@ -31,81 +32,95 @@ public class User {
     @JoinTable(name = "userDic", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "acc_id") })
     private Set<Account> allAccounts;
 
-    public User() {
+    public User()
+    {
 
-	Random rand = new Random(System.currentTimeMillis());
+        Random rand = new Random(System.currentTimeMillis());
 
-	userID = rand.nextLong() % 9;
+        userID = rand.nextLong() % 9;
 
-	name = "DefaultUser" + userID;
+        name = "DefaultUser" + userID;
 
-	allAccounts = new HashSet<Account>();
+        allAccounts = new HashSet<Account>();
     }
 
-    public User(String in_Name) {
+    public User(String in_Name)
+    {
 
-	name = in_Name;
+        name = in_Name;
 
-	allAccounts = new HashSet<Account>();
+        allAccounts = new HashSet<Account>();
     }
 
-    public User(String in_Name, ArrayList<Account> in_array) {
+    public User(String in_Name, ArrayList<Account> in_array)
+    {
 
-	name = in_Name;
+        name = in_Name;
 
-	allAccounts = new HashSet<Account>();
+        allAccounts = new HashSet<Account>();
 
-	allAccounts.addAll(in_array);
+        allAccounts.addAll(in_array);
     }
 
-    public String getName() {
-	return name;
+    public String getName()
+    {
+        return name;
     }
 
-    public void setName(String name) {
-	this.name = name;
+    public void setName(String name)
+    {
+        this.name = name;
     }
 
-    public boolean delAccount(int in_id) {
-	for (Account ac1 : allAccounts)
-	    if (ac1.getAcc_id() == in_id) {
-		allAccounts.remove(ac1);
-		return true;
-	    }
-	return false;
+    public boolean delAccount(int in_id)
+    {
+        for (Account ac1 : allAccounts)
+            if (ac1.getAcc_id() == in_id)
+            {
+                allAccounts.remove(ac1);
+                return true;
+            }
+        return false;
     }
 
-    public boolean addAccount(Account in_Account) {
+    public boolean addAccount(Account in_Account)
+    {
 
-	if (HasThisCurrency(in_Account.getTyp()))
-	    return false;
-	else {
-	    allAccounts.add(in_Account);
-	    return true;
-	}
+        if (HasThisCurrency(in_Account.getTyp()))
+            return false;
+        else
+        {
+            allAccounts.add(in_Account);
+            return true;
+        }
     }
 
-    public boolean HasThisCurrency(CurrencyType typ) {
-	for (Account ac1 : allAccounts)
-	    if (ac1.sameCurrency(typ))
-		return true;
-	return false;
+    public boolean HasThisCurrency(CurrencyType typ)
+    {
+        for (Account ac1 : allAccounts)
+            if (ac1.sameCurrency(typ))
+                return true;
+        return false;
     }
 
-    public Long getUserID() {
-	return userID;
+    public Long getUserID()
+    {
+        return userID;
     }
 
-    public void setUserID(Long userID) {
-	this.userID = userID;
+    public void setUserID(Long userID)
+    {
+        this.userID = userID;
     }
 
-    public Set<Account> getAllAccounts() {
-	return allAccounts;
+    public Set<Account> getAllAccounts()
+    {
+        return allAccounts;
     }
 
-    public void setAllAccounts(Set<Account> allAccounts) {
-	this.allAccounts = allAccounts;
+    public void setAllAccounts(Set<Account> allAccounts)
+    {
+        this.allAccounts = allAccounts;
     }
 
 }
