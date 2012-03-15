@@ -15,6 +15,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity(name = "user")
 @Table(name = "user")
 public class User
@@ -30,6 +33,7 @@ public class User
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "userDic", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "acc_id") })
+    @LazyCollection(value = LazyCollectionOption.FALSE)
     private Set<Account> allAccounts;
 
     public User()

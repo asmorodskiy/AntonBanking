@@ -3,7 +3,9 @@ package com.antonbanking.hibernate;
 import java.util.ArrayList;
 import java.util.Set;
 
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.classic.Session;
 
 import com.antonbanking.business.Account;
@@ -14,6 +16,8 @@ public class UserDB
 
     private SessionFactory sessionFactory;
 
+    private Transaction tx;
+
     public UserDB()
     {
         this.sessionFactory = HibernateUtil.getSessionFactory();
@@ -21,44 +25,106 @@ public class UserDB
 
     private Session currentSession()
     {
-        return sessionFactory.openSession();
+        return sessionFactory.getCurrentSession();
     }
 
     public void insert(User user)
     {
-        currentSession().save(user);
+        try
+        {
+            tx = currentSession().beginTransaction();
+            currentSession().save(user);
+            tx.commit();
+        }
+        catch (HibernateException ex)
+        {
+            HibernateUtil.Rollback(tx, ex.getMessage());
+        }
     }
 
     public void update(User user)
     {
-        currentSession().update(user);
+        try
+        {
+            tx = currentSession().beginTransaction();
+            currentSession().update(user);
+            tx.commit();
+        }
+        catch (HibernateException ex)
+        {
+            HibernateUtil.Rollback(tx, ex.getMessage());
+        }
     }
 
     public User find(int user_id)
     {
-        return (User) currentSession().get(User.class, new Long(user_id));
+        try
+        {
+            tx = currentSession().beginTransaction();
+            User userToReturn = (User) currentSession().get(User.class, new Long(user_id));
+            tx.commit();
+            return userToReturn;
+        }
+        catch (HibernateException ex)
+        {
+            HibernateUtil.Rollback(tx, ex.getMessage());
+            return null;
+        }
+
     }
 
     @SuppressWarnings("unchecked")
     public ArrayList<User> findAll()
     {
-        return (ArrayList<User>) currentSession().createQuery("from user").list();
+        try
+        {
+            tx = currentSession().beginTransaction();
+            ArrayList<User> userListToReturn = (ArrayList<User>) currentSession().createQuery("from user").list();
+            tx.commit();
+            return userListToReturn;
+        }
+        catch (HibernateException ex)
+        {
+            HibernateUtil.Rollback(tx, ex.getMessage());
+            return null;
+        }
     }
 
     public Set<Account> getAllAccountsByID(int user_id)
     {
-        User user = find(user_id);
-        return user.getAllAccounts();
+        try
+        {
+            tx = currentSession().beginTransaction();
+            User user = (User) currentSession().get(User.class, new Long(user_id));
+            Set<Account> setToReturn = user.getAllAccounts();
+            tx.commit();
+            return setToReturn;
+        }
+        catch (HibernateException ex)
+        {
+            HibernateUtil.Rollback(tx, ex.getMessage());
+            return null;
+        }
     }
 
     public ArrayList<Long> getAccountIDs(int user_id)
     {
-        User user = find(user_id);
-        Set<Account> accounts = user.getAllAccounts();
-        ArrayList<Long> ids = new ArrayList<Long>();
-        for (Account acc : accounts)
-            ids.add(acc.getAcc_id());
-        return ids;
+        try
+        {
+            tx = currentSession().beginTransaction();
+            User user = find(user_id);
+            Set<Account> accounts = user.getAllAccounts();
+            ArrayList<Long> ids = new ArrayList<Long>();
+            for (Account acc : accounts)
+                ids.add(acc.getAcc_id());
+            tx.commit();
+            return ids;
+        }
+        catch (HibernateException ex)
+        {
+            HibernateUtil.Rollback(tx, ex.getMessage());
+            return null;
+        }
     }
 
 }

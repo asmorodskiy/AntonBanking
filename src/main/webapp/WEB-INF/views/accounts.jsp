@@ -2,9 +2,8 @@
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
 	xmlns:c="http://java.sun.com/jstl/core_rt"
 	xmlns:form="http://www.springframework.org/tags/form"
-	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-	version="2.0">
-	
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" version="2.0">
+
 	<jsp:directive.page language="java"
 		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
 	<jsp:text>
@@ -18,35 +17,52 @@
 <title>Anton Banking Inc</title>
 </head>
 <body>
-	<a href="/AntonBanking/AdminServlet">Back to list of users</a>
-	<form method="get" action="AddAccountServlet">
-		<input type="submit" value="Add Account" />		
-		<input type="text" name="ATMQuantity" />		
-		<SELECT name="CurrencyTypes" >
-			<c:forEach items="${ATMCurrencyTypes}" var="CurrencyType">
-				<option value="${CurrencyType}">${CurrencyType}</option>
-			</c:forEach>
-		</SELECT>		
-	</form>	
-	<form method="GET" action="AccountsServlet">
-	<h1 align="center">List of Accounts for <c:out value="${ATMUserName}" /></h1>	
-	<table id="AccountsList" cellspacing="0" cellpadding="0" border="1" align="center" >
-		<thead>
+	<a href="/AntonBanking">Back to list of users</a>
+	<form method="post" action="AddAccountServlet">	
+		<table>
 			<tr>
-				<th>Type</th>
-				<th>Quantity</th>
-			</tr>			
-		</thead>
-		<TBODY>
-			<c:forEach items="${ATMAccounts}" var="account">
-				<tr>					
-					<td><a href="/AntonBanking/MyTransactionServlet?ATMUserID=${ATMUserID}&amp;ATMAccountID=${account.idstr}"> <c:out value="${account.typstr}" /> </a></td>
-					<td><c:out value="${account.qanstr}" /></td>				
-				</tr>
-			</c:forEach>
-		</TBODY>
-	</table>	
+				<td><form:label path="account.qanstr">Quantity</form:label></td>
+				<td><form:input path="account.qanstr" /></td>
+			</tr>
+			<tr>
+				<td><form:label path="account.typ">Currency Type</form:label></td>
+				<td><form:select path="account.typ">
+						<form:option label="Select one ..." value="" />
+						<form:options items="${ATMCurrencyTypes}" />
+					</form:select></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="Add Account" /></td>
+			</tr>
+		</table>
 	</form>
+
+	<DIV>
+		<h1 align="center">
+			List of Accounts
+			<c:out value="${ATMUserName}" />
+		</h1>
+		<table id="AccountsList" cellspacing="0" cellpadding="0" border="1"
+			align="center">
+			<thead>
+				<tr>
+					<th>Type</th>
+					<th>Quantity</th>
+				</tr>
+			</thead>
+			<TBODY>
+				<c:forEach items="${ATMAccounts}" var="account">
+					<tr>
+						<td><a
+							href="/AntonBanking/${ATMUserID}/${account.idstr}/MyTransactionServlet">
+								<c:out value="${account.typstr}" />
+						</a></td>
+						<td><c:out value="${account.qanstr}" /></td>
+					</tr>
+				</c:forEach>
+			</TBODY>
+		</table>
+	</DIV>
 </body>
 	</html>
-	</jsp:root>
+</jsp:root>

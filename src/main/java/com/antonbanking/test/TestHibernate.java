@@ -1,15 +1,16 @@
 package com.antonbanking.test;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.antonbanking.business.User;
-import com.antonbanking.hibernate.UserDB;
+import com.antonbanking.service.MainService;
 
 public class TestHibernate
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws ClassNotFoundException, SQLException
     {
-        UserDB userDB = new UserDB();
-        ArrayList<User> userList = userDB.findAll();
+        ArrayList<User> userList = MainService.getAllUsers();
+        System.out.println(userList.size());
     }
 }

@@ -3,46 +3,67 @@ package com.antonbanking.servlet;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.antonbanking.hibernate.AccountDB;
-import com.antonbanking.hibernate.UserDB;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.antonbanking.business.MyTransaction;
 import com.antonbanking.service.MainService;
 
-public class MyTransactionServlet extends HttpServlet
+@Controller
+@SessionAttributes
+public class MyTransactionServlet
 {
 
-    private UserDB userDB;
-
-    private AccountDB accountDB;
-
-    private static final long serialVersionUID = 9142114737047146060L;
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    @RequestMapping(value = "/TransactionsServlet/${userID}/{AccountID}", method = RequestMethod.GET)
+    public ModelAndView showTransactions(@PathVariable int userID, @PathVariable int AccountID, HttpSession session) throws ServletException, IOException
     {
 
-        HttpSession session = request.getSession(false);
-        if (session != null)
+        String usr_name = MainService.getUserName(userID);
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("mytransactions");
+        mav.addObject("ATMTransactions", MainService.getAllMyTransactions(AccountID));
+        mav.addObject("ATMUserName", usr_name);
+        mav.addObject("ATMCurrencyName", MainService.getAccountCurrencyName(AccountID));
+        session.setAttribute("ATMAccountID", String.valueOf(AccountID));
+        return mav;
+    }
+
+    @RequestMapping(value = "/TransactionsServlet/AddTransactionServlet", method = RequestMethod.POST)
+    public String AddAccount(@ModelAttribute("transaction") MyTransaction transaction, BindingResult result, HttpSession session)
+    {
+        /*String userid = (String) session.getAttribute("HiddenUserID");
+        String accountId = (String) session.getAttribute("ATMAccountID");
+        String tmp = request.getParameter("valplus");
+        double value;
+        if (tmp == null)
         {
-            int userId = Integer.valueOf((String) session.getAttribute("ATMUserID"));
-            String usr_name = MainService.getUserName(userId, userDB);
-            int account_id = Integer.valueOf(request.getParameter("ATMAccountID"));
-            request.setAttribute("ATMTransactions", MainService.getAllMyTransactions(account_id, accountDB));
-            request.setAttribute("ATMUserName", usr_name);
-            request.setAttribute("ATMCurrencyName", MainService.getAccountCurrencyName(account_id, accountDB));
+            tmp = request.getParameter("valminus");
 
-            session.setAttribute("ATMAccountID", String.valueOf(account_id));
-
-            request.getRequestDispatcher("mytransactions.jsp").forward(request, response);
+            if (tmp == null)
+            {
+                request.setAttribute("error", "error");
+                response.sendRedirect(String.format("/AntonBanking/MyTransactionServlet?ATMUserID=%s&ATMAccountID=%s", userid, accountId));
+            }
+            else
+            {
+                value = -Double.valueOf(tmp);
+                MainService.AddTransaction(accountId, value, accountDB);
+            }
         }
+        else
+        {
+            value = Double.valueOf(tmp);
+            MainService.AddTransaction(accountId, value, accountDB);
+        }
+        response.sendRedirect(String.format("/AntonBanking/MyTransactionServlet?ATMUserID=%s&ATMAccountID=%s", userid, accountId));    */
+        return "redirect:/";
     }
-
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
-        doGet(request, response);
-    }
-
 }
