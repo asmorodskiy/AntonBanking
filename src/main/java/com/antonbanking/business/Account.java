@@ -13,59 +13,15 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity(name = "accounts")
 @Table(name = "accounts")
-public class Account
-{
+public class Account {
 
     @Column(name = "quantity")
     private double quantity;
-
-    public double changeQuantity(double change)
-    {
-
-        transactions.add(new MyTransaction(change));
-
-        return quantity += change;
-    }
-
-    public void setQuantity(double quantity)
-    {
-
-        transactions.clear();
-
-        this.quantity = quantity;
-    }
-
-    public double getQantity()
-    {
-        return quantity;
-    }
-
-    public String getQanstr()
-    {
-        return String.valueOf(quantity);
-    }
-
-    public String getTypstr()
-    {
-        return typ.getName();
-    }
-
-    public String getIdstr()
-    {
-        return String.valueOf(acc_id);
-    }
-
-    public CurrencyType getTyp()
-    {
-        return typ;
-    }
-
-    public void addTransaction(MyTransaction in)
-    {
-        transactions.add(in);
-    }
 
     @Id
     @GeneratedValue
@@ -76,46 +32,59 @@ public class Account
     private CurrencyType typ;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "mytransactionsDic", joinColumns = { @JoinColumn(name = "acc_id") }, inverseJoinColumns = { @JoinColumn(name = "trans_id") })
+    @JoinTable(name = "mytransactionsDic", joinColumns = { @JoinColumn(name = "acc_id", referencedColumnName = "acc_id") }, inverseJoinColumns = { @JoinColumn(name = "trans_id", referencedColumnName = "trans_id") })
+    @LazyCollection(value = LazyCollectionOption.FALSE)
     private Set<MyTransaction> transactions;
 
-    public void setTransactions(double quantity, Set<MyTransaction> tr)
-    {
-        this.quantity = quantity;
-        transactions = tr;
+    public Account() {
+	typ = CurrencyType.hrivna;
+	quantity = 0;
+	transactions = new HashSet<MyTransaction>();
     }
 
-    public Account()
-    {
-        typ = CurrencyType.hrivna;
-        quantity = 0;
-        transactions = new HashSet<MyTransaction>();
+    public Account(CurrencyType in_typ) {
+	quantity = 0;
+	typ = in_typ;
+	transactions = new HashSet<MyTransaction>();
     }
 
-    public Account(CurrencyType in_typ)
-    {
-        quantity = 0;
-        typ = in_typ;
-        transactions = new HashSet<MyTransaction>();
+    public boolean sameCurrency(CurrencyType in) {
+	return typ.equals(in);
     }
 
-    public boolean sameCurrency(CurrencyType in)
-    {
-        return typ.equals(in);
+    public double getQuantity() {
+	return quantity;
     }
 
-    public Set<MyTransaction> getTransactions()
-    {
-        return transactions;
+    public Long getAcc_id() {
+	return acc_id;
     }
 
-    public Long getAcc_id()
-    {
-        return acc_id;
+    public CurrencyType getTyp() {
+	return typ;
     }
 
-    public void setAcc_id(Long acc_id)
-    {
-        this.acc_id = acc_id;
+    public Set<MyTransaction> getTransactions() {
+	return transactions;
+    }
+
+    public void setQuantity(double quantity) {
+	this.quantity = quantity;
+    }
+
+    public void setAcc_id(Long acc_id) {
+	this.acc_id = acc_id;
+    }
+
+    public void setTyp(CurrencyType typ) {
+	this.typ = typ;
+    }
+
+    public void setTransactions(Set<MyTransaction> transactions) {
+	this.transactions = transactions;
+    }
+
+    public String typToString() {
+	return typ.getName();
     }
 }

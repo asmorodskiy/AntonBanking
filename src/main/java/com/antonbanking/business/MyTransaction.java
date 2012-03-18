@@ -10,33 +10,12 @@ import javax.persistence.Table;
 
 @Entity(name = "mytransactions")
 @Table(name = "mytransactions")
-public class MyTransaction
-{
+public class MyTransaction {
 
     @Id
     @GeneratedValue
     @Column(name = "trans_id")
     private Long trans_id;
-
-    public Date getDate()
-    {
-        return date;
-    }
-
-    public String getDatestr()
-    {
-        return date.toString();
-    }
-
-    public double getValue()
-    {
-        return value;
-    }
-
-    public String getValuestr()
-    {
-        return String.valueOf(value);
-    }
 
     @Column(name = "date", nullable = false)
     private Date date;
@@ -44,38 +23,42 @@ public class MyTransaction
     @Column(name = "value")
     private double value;
 
-    public MyTransaction()
-    {
+    public Date getDate() {
+	return date;
     }
 
-    public MyTransaction(double val)
-    {
-
-        date = new Date(System.currentTimeMillis());
-        value = val;
+    public double getValue() {
+	return value;
     }
 
-    public MyTransaction(Long id, double val, Date date)
-    {
-        this.trans_id = id;
-        this.date = date;
-        this.value = val;
+    public MyTransaction() {
+    }
+
+    public MyTransaction(double val) {
+
+	date = new Date(System.currentTimeMillis());
+	value = val;
+    }
+
+    public MyTransaction(Long id, double val, Date date) {
+	this.trans_id = id;
+	this.date = date;
+	this.value = val;
     }
 
     @Override
-    public String toString()
-    {
-        return String.format("Transaction ID=%d , Transaction Time=(%s), Value = %f", trans_id, date.toString(), value);
+    public String toString() {
+	return String.format(
+		"Transaction ID=%d , Transaction Time=(%s), Value = %f",
+		trans_id, date.toString(), value);
     }
 
-    public Long getTrans_id()
-    {
-        return trans_id;
+    public Long getTrans_id() {
+	return trans_id;
     }
 
-    public void setTrans_id(Long trans_id)
-    {
-        this.trans_id = trans_id;
+    public void setTrans_id(Long trans_id) {
+	this.trans_id = trans_id;
     }
 
 }

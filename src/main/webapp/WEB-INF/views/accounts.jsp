@@ -21,8 +21,8 @@
 	<form method="post" action="AddAccountServlet">	
 		<table>
 			<tr>
-				<td><form:label path="account.qanstr">Quantity</form:label></td>
-				<td><form:input path="account.qanstr" /></td>
+				<td><form:label path="account.quantity">Quantity</form:label></td>
+				<td><form:input path="account.quantity" /></td>
 			</tr>
 			<tr>
 				<td><form:label path="account.typ">Currency Type</form:label></td>
@@ -54,10 +54,10 @@
 				<c:forEach items="${ATMAccounts}" var="account">
 					<tr>
 						<td><a
-							href="/AntonBanking/${ATMUserID}/${account.idstr}/MyTransactionServlet">
-								<c:out value="${account.typstr}" />
+							href="/AntonBanking/MyTransactionServlet/${HiddenUserID}/${account.acc_id}">
+								<c:out value="${account.typ}" />
 						</a></td>
-						<td><c:out value="${account.qanstr}" /></td>
+						<td><c:out value="${account.quantity}" /></td>
 					</tr>
 				</c:forEach>
 			</TBODY>

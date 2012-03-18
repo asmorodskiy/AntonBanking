@@ -19,51 +19,45 @@ import com.antonbanking.service.MainService;
 
 @Controller
 @SessionAttributes
-public class MyTransactionServlet
-{
+public class MyTransactionServlet {
 
-    @RequestMapping(value = "/TransactionsServlet/${userID}/{AccountID}", method = RequestMethod.GET)
-    public ModelAndView showTransactions(@PathVariable int userID, @PathVariable int AccountID, HttpSession session) throws ServletException, IOException
-    {
+    @RequestMapping(value = "/MyTransactionServlet/{userID}/{AccountID}", method = RequestMethod.GET)
+    public ModelAndView showTransactions(@PathVariable int userID,
+	    @PathVariable int AccountID, HttpSession session)
+	    throws ServletException, IOException {
 
-        String usr_name = MainService.getUserName(userID);
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("mytransactions");
-        mav.addObject("ATMTransactions", MainService.getAllMyTransactions(AccountID));
-        mav.addObject("ATMUserName", usr_name);
-        mav.addObject("ATMCurrencyName", MainService.getAccountCurrencyName(AccountID));
-        session.setAttribute("ATMAccountID", String.valueOf(AccountID));
-        return mav;
+	String usr_name = MainService.getUserName(userID);
+	ModelAndView mav = new ModelAndView();
+	mav.setViewName("mytransactions");
+	mav.addObject("ATMTransactions",
+		MainService.getAllMyTransactions(AccountID));
+	mav.addObject("ATMUserName", usr_name);
+	mav.addObject("ATMCurrencyName",
+		MainService.getAccountCurrencyName(AccountID));
+	session.setAttribute("ATMAccountID", String.valueOf(AccountID));
+	return mav;
     }
 
-    @RequestMapping(value = "/TransactionsServlet/AddTransactionServlet", method = RequestMethod.POST)
-    public String AddAccount(@ModelAttribute("transaction") MyTransaction transaction, BindingResult result, HttpSession session)
-    {
-        /*String userid = (String) session.getAttribute("HiddenUserID");
-        String accountId = (String) session.getAttribute("ATMAccountID");
-        String tmp = request.getParameter("valplus");
-        double value;
-        if (tmp == null)
-        {
-            tmp = request.getParameter("valminus");
-
-            if (tmp == null)
-            {
-                request.setAttribute("error", "error");
-                response.sendRedirect(String.format("/AntonBanking/MyTransactionServlet?ATMUserID=%s&ATMAccountID=%s", userid, accountId));
-            }
-            else
-            {
-                value = -Double.valueOf(tmp);
-                MainService.AddTransaction(accountId, value, accountDB);
-            }
-        }
-        else
-        {
-            value = Double.valueOf(tmp);
-            MainService.AddTransaction(accountId, value, accountDB);
-        }
-        response.sendRedirect(String.format("/AntonBanking/MyTransactionServlet?ATMUserID=%s&ATMAccountID=%s", userid, accountId));    */
-        return "redirect:/";
+    @RequestMapping(value = "/TransactionsServlet/AddMyTransactionServlet", method = RequestMethod.POST)
+    public String AddAccount(
+	    @ModelAttribute("transaction") MyTransaction transaction,
+	    BindingResult result, HttpSession session) {
+	/*
+	 * String userid = (String) session.getAttribute("HiddenUserID"); String
+	 * accountId = (String) session.getAttribute("ATMAccountID"); String tmp
+	 * = request.getParameter("valplus"); double value; if (tmp == null) {
+	 * tmp = request.getParameter("valminus");
+	 * 
+	 * if (tmp == null) { request.setAttribute("error", "error");
+	 * response.sendRedirect(String.format(
+	 * "/AntonBanking/MyTransactionServlet?ATMUserID=%s&ATMAccountID=%s",
+	 * userid, accountId)); } else { value = -Double.valueOf(tmp);
+	 * MainService.AddTransaction(accountId, value, accountDB); } } else {
+	 * value = Double.valueOf(tmp); MainService.AddTransaction(accountId,
+	 * value, accountDB); } response.sendRedirect(String.format(
+	 * "/AntonBanking/MyTransactionServlet?ATMUserID=%s&ATMAccountID=%s",
+	 * userid, accountId));
+	 */
+	return "redirect:/";
     }
 }

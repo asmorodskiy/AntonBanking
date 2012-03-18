@@ -18,15 +18,15 @@
 <title>Anton Banking Inc</title>
 </head>
 <body>
-	<a href="/AntonBanking/AccountsServlet?ATMUserID=${ATMUserID}">Back to list of accounts for ${ATMUserName}</a>
+	<a href="/AntonBanking/AccountsServlet/${ATMUserID}">Back to list of accounts for ${ATMUserName}</a>
 	<c:if test="${error != null }">
 	<h1 size="23" color="red"> Shit happens </h1>	
 	</c:if>
-	<form method="get" action="AddMyTransactionServlet">
+	<form method="post" action="AddMyTransactionServlet">	
 		<input type="submit" value="Add Money" />				
 		<input type="text" name="valplus" />
 	</form>
-	<form method="get" action="AddMyTransactionServlet">
+	<form method="post" action="AddMyTransactionServlet">
 		<input type="submit" value="Take Money" />				
 		<input type="text" name="valminus" />
 	</form>		
@@ -42,8 +42,8 @@
 		<TBODY>
 			<c:forEach items="${ATMTransactions}" var="transaction">
 				<tr>					
-					<td><c:out value="${transaction.datestr}" /></td>
-					<td><c:out value="${transaction.valuestr}" /></td>				
+					<td><c:out value="${transaction.date}" /></td>
+					<td><c:out value="${transaction.value}" /></td>				
 				</tr>
 			</c:forEach>
 		</TBODY>
