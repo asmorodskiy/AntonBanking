@@ -18,18 +18,32 @@
 <title>Anton Banking Inc</title>
 </head>
 <body>
-	<a href="/AntonBanking/AccountsServlet/${ATMUserID}">Back to list of accounts for ${ATMUserName}</a>
+	<a href="/AntonBanking/AccountsServlet/${HiddenUserID}">Back to list of accounts for ${ATMUserName}</a>
 	<c:if test="${error != null }">
 	<h1 size="23" color="red"> Shit happens </h1>	
 	</c:if>
-	<form method="post" action="AddMyTransactionServlet">	
-		<input type="submit" value="Add Money" />				
-		<input type="text" name="valplus" />
+	<form method="post" action="AddMoneyServlet">	
+	<table>
+			<tr>
+				<td><form:label path="formTransaction.value">Quantity to put</form:label></td>
+				<td><form:input path="formTransaction.value" /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="PUT" /></td>
+			</tr>
+	</table>
 	</form>
-	<form method="post" action="AddMyTransactionServlet">
-		<input type="submit" value="Take Money" />				
-		<input type="text" name="valminus" />
-	</form>		
+	<form method="post" action="TakeMoneyServlet">	
+	<table>
+			<tr>
+				<td><form:label path="formTransaction.value">Quantity to take</form:label></td>
+				<td><form:input path="formTransaction.value" /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="TAKE" /></td>
+			</tr>
+	</table>
+	</form>
 	<form method="GET" action="MyTransactionServlet">
 	<h1 align="center">List of Transactions for <c:out value="${ATMUserName}" /> currency=<c:out value="${ATMCurrencyName}" /></h1>	
 	<table id="MyTransactionsList" cellspacing="0" cellpadding="0" border="1" align="center" >

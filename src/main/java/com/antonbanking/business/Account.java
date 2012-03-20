@@ -18,7 +18,8 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity(name = "accounts")
 @Table(name = "accounts")
-public class Account {
+public class Account
+{
 
     @Column(name = "quantity")
     private double quantity;
@@ -36,55 +37,72 @@ public class Account {
     @LazyCollection(value = LazyCollectionOption.FALSE)
     private Set<MyTransaction> transactions;
 
-    public Account() {
-	typ = CurrencyType.hrivna;
-	quantity = 0;
-	transactions = new HashSet<MyTransaction>();
+    public Account()
+    {
+        typ = CurrencyType.hrivna;
+        quantity = 0;
+        transactions = new HashSet<MyTransaction>();
     }
 
-    public Account(CurrencyType in_typ) {
-	quantity = 0;
-	typ = in_typ;
-	transactions = new HashSet<MyTransaction>();
+    public Account(CurrencyType in_typ)
+    {
+        quantity = 0;
+        typ = in_typ;
+        transactions = new HashSet<MyTransaction>();
     }
 
-    public boolean sameCurrency(CurrencyType in) {
-	return typ.equals(in);
+    public boolean sameCurrency(CurrencyType in)
+    {
+        return typ.equals(in);
     }
 
-    public double getQuantity() {
-	return quantity;
+    public double getQuantity()
+    {
+        return quantity;
     }
 
-    public Long getAcc_id() {
-	return acc_id;
+    public Long getAcc_id()
+    {
+        return acc_id;
     }
 
-    public CurrencyType getTyp() {
-	return typ;
+    public CurrencyType getTyp()
+    {
+        return typ;
     }
 
-    public Set<MyTransaction> getTransactions() {
-	return transactions;
+    public Set<MyTransaction> getTransactions()
+    {
+        return transactions;
     }
 
-    public void setQuantity(double quantity) {
-	this.quantity = quantity;
+    public void setQuantity(double quantity)
+    {
+        this.quantity = quantity;
     }
 
-    public void setAcc_id(Long acc_id) {
-	this.acc_id = acc_id;
+    public void setAcc_id(Long acc_id)
+    {
+        this.acc_id = acc_id;
     }
 
-    public void setTyp(CurrencyType typ) {
-	this.typ = typ;
+    public void setTyp(CurrencyType typ)
+    {
+        this.typ = typ;
     }
 
-    public void setTransactions(Set<MyTransaction> transactions) {
-	this.transactions = transactions;
+    public void setTransactions(Set<MyTransaction> transactions)
+    {
+        this.transactions = transactions;
     }
 
-    public String typToString() {
-	return typ.getName();
+    public String typToString()
+    {
+        return typ.getName();
+    }
+
+    public void addTransaction(MyTransaction transaction)
+    {
+        transactions.add(transaction);
     }
 }
