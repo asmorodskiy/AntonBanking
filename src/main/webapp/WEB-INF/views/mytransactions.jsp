@@ -22,7 +22,7 @@
 	<c:if test="${error != null }">
 	<h1 size="23" color="red"> Shit happens </h1>	
 	</c:if>
-	<form method="post" action="AddMoneyServlet">	
+	<form method="post" action="/AntonBanking/MyTransactionServlet/AddMoneyServlet">	
 	<table>
 			<tr>
 				<td><form:label path="formTransaction.value">Quantity to put</form:label></td>
@@ -33,7 +33,7 @@
 			</tr>
 	</table>
 	</form>
-	<form method="post" action="TakeMoneyServlet">	
+	<form method="post" action="/AntonBanking/MyTransactionServlet/TakeMoneyServlet">	
 	<table>
 			<tr>
 				<td><form:label path="formTransaction.value">Quantity to take</form:label></td>

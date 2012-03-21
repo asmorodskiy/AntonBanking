@@ -103,6 +103,7 @@ public class Account
 
     public void addTransaction(MyTransaction transaction)
     {
+        this.quantity += transaction.getValue();
         transactions.add(transaction);
     }
 }
