@@ -22,28 +22,28 @@
 	<c:if test="${error != null }">
 	<h1 size="23" color="red"> Shit happens </h1>	
 	</c:if>
-	<form method="post" action="/AntonBanking/MyTransactionServlet/AddMoneyServlet">	
+	<form:form method="post" action="/AntonBanking/MyTransactionServlet/AddMoneyServlet" modelAttribute="formTransaction">	
 	<table>
 			<tr>
-				<td><form:label path="formTransaction.value">Quantity to put</form:label></td>
-				<td><form:input path="formTransaction.value" /></td>
+				<td><form:label path="value">Quantity to put</form:label></td>
+				<td><form:input path="value" /></td>
 			</tr>
 			<tr>
 				<td colspan="2"><input type="submit" value="PUT" /></td>
 			</tr>
 	</table>
-	</form>
-	<form method="post" action="/AntonBanking/MyTransactionServlet/TakeMoneyServlet">	
+	</form:form>
+	<form:form method="post" action="/AntonBanking/MyTransactionServlet/TakeMoneyServlet" modelAttribute="formTransaction" >	
 	<table>
 			<tr>
-				<td><form:label path="formTransaction.value">Quantity to take</form:label></td>
-				<td><form:input path="formTransaction.value" /></td>
+				<td><form:label path="value">Quantity to take</form:label></td>
+				<td><form:input path="value" /></td>
 			</tr>
 			<tr>
 				<td colspan="2"><input type="submit" value="TAKE" /></td>
 			</tr>
 	</table>
-	</form>
+	</form:form>
 	<form method="GET" action="MyTransactionServlet">
 	<h1 align="center">List of Transactions for <c:out value="${ATMUserName}" /> currency=<c:out value="${ATMCurrencyName}" /></h1>	
 	<table id="MyTransactionsList" cellspacing="0" cellpadding="0" border="1" align="center" >

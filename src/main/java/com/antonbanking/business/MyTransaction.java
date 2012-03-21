@@ -21,11 +21,21 @@ public class MyTransaction
     private Long trans_id;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "date", nullable = false)
+    @Column(name = "date")
     private Date date;
 
     @Column(name = "value")
     private double value;
+
+    public void setDate(Date date)
+    {
+        this.date = date;
+    }
+
+    public void setValue(double value)
+    {
+        this.value = value;
+    }
 
     public Date getDate()
     {
@@ -39,6 +49,7 @@ public class MyTransaction
 
     public MyTransaction()
     {
+        date = new Date(System.currentTimeMillis());
     }
 
     public MyTransaction(double val)
