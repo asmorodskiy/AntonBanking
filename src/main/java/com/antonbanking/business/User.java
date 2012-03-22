@@ -14,8 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -25,10 +25,8 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class User
 {
 
-    //    @Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters long")
-    //    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Username must be alphanumeric with no spaces")
-    @NotNull
-    @Max(20)
+    @Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters long")
+    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Username must be alphanumeric with no spaces")
     @Column(name = "name")
     private String name;
 

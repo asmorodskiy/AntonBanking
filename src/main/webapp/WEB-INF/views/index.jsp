@@ -25,7 +25,7 @@
 			<tr>
 				<td><form:label path="user.name">First Name</form:label></td>
 				<td><form:input path="user.name" /></td>
-				<td><form:errors path="user.name" cssClass="error"/></td>
+				<td><form:errors path="user.name" /></td>
 			</tr>
 			<tr>
 				<td colspan="2"><input type="submit" value="Add User" /></td>
