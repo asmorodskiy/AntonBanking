@@ -24,7 +24,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 @Table(name = "user")
 public class User
 {
-
     @Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters long")
     @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Username must be alphanumeric with no spaces")
     @Column(name = "name")
