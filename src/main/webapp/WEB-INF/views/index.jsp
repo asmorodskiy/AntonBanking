@@ -20,18 +20,18 @@
 	<c:if test="${error != null }">
 		<h1 size="23" color="red">Shit happens</h1>
 	</c:if>
-	<form method="post" action="AddUser">
+	<form:form method="post" action="AddUser" modelAttribute="user">
 		<table>
 			<tr>
-				<td><form:label path="user.name">First Name</form:label></td>
-				<td><form:input path="user.name" /></td>
-				<td><form:errors path="user.name" /></td>
+				<td><form:label path="name">First Name</form:label></td>
+				<td><form:input path="name" /></td>
+				<td><form:errors path="*" /></td>
 			</tr>
 			<tr>
 				<td colspan="2"><input type="submit" value="Add User" /></td>
 			</tr>
 		</table>
-	</form>
+	</form:form>
 	<DIV>
 		<h1 align="center">List of Users</h1>
 		<table id="UserList" cellspacing="0" cellpadding="0" border="1"
