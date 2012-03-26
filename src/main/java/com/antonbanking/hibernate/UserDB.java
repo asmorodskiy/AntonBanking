@@ -3,6 +3,8 @@ package com.antonbanking.hibernate;
 import java.util.ArrayList;
 import java.util.Set;
 
+import javax.validation.ConstraintViolationException;
+
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -39,6 +41,11 @@ public class UserDB
         catch (HibernateException ex)
         {
             HibernateUtil.Rollback(tx, ex.getMessage());
+        }
+        catch (ConstraintViolationException ex)
+        {
+            HibernateUtil.Rollback(tx, ex.getMessage());
+            throw ex;
         }
     }
 
