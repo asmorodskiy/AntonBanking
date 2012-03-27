@@ -8,8 +8,6 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,20 +16,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.antonbanking.business.User;
 import com.antonbanking.service.MainService;
-import com.antonbanking.validation.UserValidator;
 
 @Controller
 @SessionAttributes("user")
 public class AdminServlet
 {
 
-    private UserValidator validator;
+    /*private UserValidator validator;
 
     @InitBinder("user")
     protected void initBinder(WebDataBinder binder)
     {
         binder.setValidator(validator);
-    }
+    }*/
 
     @RequestMapping(value = "/")
     public ModelAndView showUsers() throws ClassNotFoundException, SQLException

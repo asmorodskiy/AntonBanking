@@ -28,6 +28,10 @@
 				<td><form:errors path="*" /></td>
 			</tr>
 			<tr>
+				<td><form:label path="password">User Password</form:label></td>
+				<td><form:password path="password" /></td>				
+			</tr>
+			<tr>
 				<td colspan="2"><input type="submit" value="Add User" /></td>
 			</tr>
 		</table>

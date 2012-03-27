@@ -3,8 +3,6 @@ package com.antonbanking.hibernate;
 import java.util.ArrayList;
 import java.util.Set;
 
-import javax.validation.ConstraintViolationException;
-
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -42,11 +40,11 @@ public class UserDB
         {
             HibernateUtil.Rollback(tx, ex.getMessage());
         }
-        catch (ConstraintViolationException ex)
+        /*catch (ConstraintViolationException ex)
         {
             HibernateUtil.Rollback(tx, ex.getMessage());
             throw ex;
-        }
+        }*/
     }
 
     public void update(User user)
@@ -78,6 +76,24 @@ public class UserDB
             return null;
         }
 
+    }
+
+    @SuppressWarnings("unchecked")
+    public User findByName(String name)
+    {
+        try
+        {
+            tx = currentSession().beginTransaction();
+            String query = String.format("from user where user.name='%s'", name);
+            ArrayList<User> userListToReturn = (ArrayList<User>) currentSession().createQuery(query).list();
+            // TODO : we assume that User.name is unique here
+            return userListToReturn.get(0);
+        }
+        catch (HibernateException ex)
+        {
+            HibernateUtil.Rollback(tx, ex.getMessage());
+            return null;
+        }
     }
 
     @SuppressWarnings("unchecked")

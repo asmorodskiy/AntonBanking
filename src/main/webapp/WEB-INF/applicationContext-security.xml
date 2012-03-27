@@ -1,58 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!--
-  - Sample namespace-based configuration
-  -
-  -->
-
-<beans:beans xmlns="http://www.springframework.org/schema/security"
-    xmlns:beans="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
-
-    <global-method-security pre-post-annotations="enabled">
-        <!-- AspectJ pointcut expression that locates our "post" method and applies security that way
-        <protect-pointcut expression="execution(* bigbank.*Service.post*(..))" access="ROLE_TELLER"/>
-        -->
-    </global-method-security>
-
-    <http use-expressions="true">       
-        <intercept-url pattern="/**" access="isAuthenticated()" />
-        <!-- Disable web URI authorization, as we're using <global-method-security> and have @Secured the services layer instead
-        <intercept-url pattern="/listAccounts.html" access="isRememberMe()" />
-        <intercept-url pattern="/post.html" access="hasRole('ROLE_TELLER')" />
-        <intercept-url pattern="/**" access="permitAll" />
-        -->
-        
-        <form-login />
-        <logout />
-        <remember-me />
-<!--
-    Uncomment to enable X509 client authentication support
-        <x509 />
--->
-        <!-- Uncomment to limit the number of sessions a user can have 
-        <session-management invalid-session-url="/timeout.jsp">
-            <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
-        </session-management> -->
-
-    </http>
-
-    <!--
-    Usernames/Passwords are
-        rod/koala
-        dianne/emu
-        scott/wombat
-        peter/opal
-    -->
-    <authentication-manager>
-        <authentication-provider>
-            <password-encoder hash="md5"/>
-            <user-service>
-                <user name="anton" password="161ebd7d45089b3446ee4e0d86dbcf92" authorities="ROLE_SUPERVISOR, ROLE_USER, ROLE_TELLER" />                
-            </user-service>
-        </authentication-provider>
-    </authentication-manager>
-
-</beans:beans>
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:security="http://www.springframework.org/schema/security"
+ xmlns:p="http://www.springframework.org/schema/p"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans 
+      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/security 
+   http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+  
+ <!-- This is where we configure Spring-Security  -->
+ <security:http auto-config="false" use-expressions="true" access-denied-page="/denied"
+   entry-point-ref="authenticationEntryPoint" >
+  
+  <security:intercept-url pattern="/**" access="isAuthenticated()" />  
+    
+  <security:logout
+    invalidate-session="true"
+    logout-success-url="/auth/login"
+    logout-url="/auth/logout"/>
+  
+  <security:custom-filter ref="blacklistFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
+  <security:custom-filter ref="authenticationFilter" position="FORM_LOGIN_FILTER"/>
+ </security:http>
+  
+  <!--  Custom filter to deny unwanted users even though registered -->
+  <bean id="blacklistFilter" class="com.antonbanking.filter.BlackListFilter" />
+   
+  <!-- Custom filter for username and password. The real customization is done in the customAthenticationManager -->
+  <bean id="authenticationFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter"
+    p:authenticationManager-ref="AuthService"
+    p:authenticationFailureHandler-ref="customAuthenticationFailureHandler"
+    p:authenticationSuccessHandler-ref="customAuthenticationSuccessHandler" />
+     
+ <!-- Custom authentication manager. In order to authenticate, username and password must not be the same -->
+ <bean id="customAuthenticationManager" class="com.antonbanking.service.AuthService" />
+   
+  <!-- We just actually need to set the default failure url here -->
+   <bean id="customAuthenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler"
+   p:defaultFailureUrl="/auth/login?error=true" />
+    
+   <!-- We just actually need to set the default target url here -->
+  <bean id="customAuthenticationSuccessHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler"
+   p:defaultTargetUrl="/" />
+   
+  <!-- The AuthenticationEntryPoint is responsible for redirecting the user to a particular page, like a login page,
+    whenever the server sends back a response requiring authentication -->
+  <!-- See Spring-Security Reference 5.4.1 for more info -->
+  <bean id="authenticationEntryPoint"  class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint"
+   p:loginFormUrl="/auth/login"/>
+ 
+ <!-- The tag below has no use but Spring Security needs it to autowire the parent property of 
+   org.springframework.security.authentication.ProviderManager. Otherwise we get an error 
+   A probable bug. This is still under investigation-->
+ <security:authentication-manager/>
+</beans>
