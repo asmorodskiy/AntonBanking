@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Digits;
 
 @Entity(name = "mytransactions")
 @Table(name = "mytransactions")
@@ -24,6 +25,7 @@ public class MyTransaction
     @Column(name = "date")
     private Date date;
 
+    @Digits(integer = 5, fraction = 2, message = "Value should have no more than 5 and 2 after come")
     @Column(name = "value")
     private double value;
 

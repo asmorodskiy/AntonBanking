@@ -1,6 +1,5 @@
 package com.antonbanking.service;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -20,7 +19,7 @@ public class MainService
 
     public static AccountDB accountDB = new AccountDB();
 
-    public static ArrayList<User> getAllUsers() throws ClassNotFoundException, SQLException
+    public static ArrayList<User> getAllUsers()
     {
         return userDB.findAll();
     }

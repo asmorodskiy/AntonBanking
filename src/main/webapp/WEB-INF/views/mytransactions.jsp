@@ -25,6 +25,9 @@
 	<form:form method="post" action="/AntonBanking/MyTransactionServlet/AddMoneyServlet" modelAttribute="formTransaction">	
 	<table>
 			<tr>
+				<td><form:errors path="*" /></td>
+			</tr>
+			<tr>
 				<td><form:label path="value">Quantity to put</form:label></td>
 				<td><form:input path="value" /></td>
 			</tr>
@@ -35,6 +38,9 @@
 	</form:form>
 	<form:form method="post" action="/AntonBanking/MyTransactionServlet/TakeMoneyServlet" modelAttribute="formTransaction" >	
 	<table>
+			<tr>
+				<td><form:errors path="*" /></td>
+			</tr>
 			<tr>
 				<td><form:label path="value">Quantity to take</form:label></td>
 				<td><form:input path="value" /></td>

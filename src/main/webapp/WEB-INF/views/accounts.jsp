@@ -21,6 +21,9 @@
 	<form method="post" action="AddAccountServlet">	
 		<table>
 			<tr>
+				<td><form:errors path="*" /></td>
+			</tr>
+			<tr>
 				<td><form:label path="account.quantity">Quantity</form:label></td>
 				<td><form:input path="account.quantity" /></td>
 			</tr>

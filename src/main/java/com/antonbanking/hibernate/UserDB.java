@@ -40,11 +40,6 @@ public class UserDB
         {
             HibernateUtil.Rollback(tx, ex.getMessage());
         }
-        /*catch (ConstraintViolationException ex)
-        {
-            HibernateUtil.Rollback(tx, ex.getMessage());
-            throw ex;
-        }*/
     }
 
     public void update(User user)

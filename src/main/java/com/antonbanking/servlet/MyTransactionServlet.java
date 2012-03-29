@@ -21,37 +21,54 @@ import com.antonbanking.service.MainService;
 @SessionAttributes
 public class MyTransactionServlet
 {
-
-    @RequestMapping(value = "/MyTransactionServlet/{userID}/{AccountID}", method = RequestMethod.GET)
-    public ModelAndView showTransactions(@PathVariable int userID, @PathVariable int AccountID, HttpSession session) throws ServletException, IOException
+    private ModelAndView getModelAndView(int userID, int accountID, HttpSession session, MyTransaction transaction)
     {
-
         String usr_name = MainService.getUserName(userID);
         ModelAndView mav = new ModelAndView();
         mav.setViewName("mytransactions");
-        mav.addObject("ATMTransactions", MainService.getAllMyTransactions(AccountID));
+        mav.addObject("ATMTransactions", MainService.getAllMyTransactions(accountID));
         mav.addObject("ATMUserName", usr_name);
-        mav.addObject("ATMCurrencyName", MainService.getAccountCurrencyName(AccountID));
-        mav.addObject("formTransaction", new MyTransaction(12));
-        session.setAttribute("ATMAccountID", String.valueOf(AccountID));
+        mav.addObject("ATMCurrencyName", MainService.getAccountCurrencyName(accountID));
+        mav.addObject("formTransaction", transaction);
+        session.setAttribute("ATMAccountID", String.valueOf(accountID));
         session.setAttribute("HiddenUserID", userID);
         return mav;
     }
 
-    @RequestMapping(value = "/MyTransactionServlet/AddMoneyServlet", method = RequestMethod.POST)
-    public String AddMoney(@ModelAttribute("formTransaction") MyTransaction transaction, BindingResult result, HttpSession session)
+    @RequestMapping(value = "/MyTransactionServlet/{userID}/{AccountID}", method = RequestMethod.GET)
+    public ModelAndView showTransactions(@PathVariable int userID, @PathVariable int AccountID, HttpSession session) throws ServletException, IOException
     {
+        return getModelAndView(userID, AccountID, session, new MyTransaction(12));
+    }
+
+    @RequestMapping(value = "/MyTransactionServlet/AddMoneyServlet", method = RequestMethod.POST)
+    public ModelAndView AddMoney(@ModelAttribute("formTransaction") MyTransaction transaction, BindingResult result, HttpSession session)
+    {
+        MyTransaction transactionForView;
         String accountID = (String) session.getAttribute("ATMAccountID");
-        MainService.updateAccount(Integer.valueOf(accountID), transaction);
-        return String.format("redirect:/MyTransactionServlet/%s/%s", session.getAttribute("HiddenUserID").toString(), accountID);
+        if (result.hasErrors())
+            transactionForView = transaction;
+        else
+        {
+            transactionForView = new MyTransaction(12);
+            MainService.updateAccount(Integer.valueOf(accountID), transaction);
+        }
+        return getModelAndView(Integer.valueOf(session.getAttribute("HiddenUserID").toString()), Integer.valueOf(accountID), session, transactionForView);
     }
 
     @RequestMapping(value = "/MyTransactionServlet/TakeMoneyServlet", method = RequestMethod.POST)
-    public String TakeMoney(@ModelAttribute("formTransaction") MyTransaction transaction, BindingResult result, HttpSession session)
+    public ModelAndView TakeMoney(@ModelAttribute("formTransaction") MyTransaction transaction, BindingResult result, HttpSession session)
     {
+        MyTransaction transactionForView;
         String accountID = (String) session.getAttribute("ATMAccountID");
-        transaction.makeNegative();
-        MainService.updateAccount(Integer.valueOf(accountID), transaction);
-        return String.format("redirect:/MyTransactionServlet/%s/%s", session.getAttribute("HiddenUserID").toString(), accountID);
+        if (result.hasErrors())
+            transactionForView = transaction;
+        else
+        {
+            transactionForView = new MyTransaction(12);
+            transaction.makeNegative();
+            MainService.updateAccount(Integer.valueOf(accountID), transaction);
+        }
+        return getModelAndView(Integer.valueOf(session.getAttribute("HiddenUserID").toString()), Integer.valueOf(accountID), session, transactionForView);
     }
 }

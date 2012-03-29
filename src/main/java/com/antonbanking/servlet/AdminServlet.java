@@ -1,13 +1,9 @@
 package com.antonbanking.servlet;
 
-import java.sql.SQLException;
-
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,36 +18,33 @@ import com.antonbanking.service.MainService;
 public class AdminServlet
 {
 
-    /*private UserValidator validator;
-
-    @InitBinder("user")
-    protected void initBinder(WebDataBinder binder)
-    {
-        binder.setValidator(validator);
-    }*/
-
-    @RequestMapping(value = "/")
-    public ModelAndView showUsers() throws ClassNotFoundException, SQLException
+    private ModelAndView getModelAndView(User user)
     {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("index");
         mav.addObject("ATMUsers", MainService.getAllUsers());
-        mav.addObject("user", new User());
+        mav.addObject("user", user);
         return mav;
     }
 
-    @RequestMapping(value = "/AddUser", method = RequestMethod.POST)
-    public String AddUser(@ModelAttribute("user") @Valid User user, BindingResult result)
+    @RequestMapping(value = "/")
+    public ModelAndView showUsers()
     {
-        try
+        return getModelAndView(new User());
+    }
+
+    @RequestMapping(value = "/AddUser", method = RequestMethod.POST)
+    public ModelAndView AddUser(@ModelAttribute("user") @Valid User user, BindingResult result)
+    {
+        User userForView;
+        if (result.hasErrors())
+            userForView = user;
+        else
         {
+            userForView = new User();
             MainService.AddUser(user);
         }
-        catch (ConstraintViolationException ex)
-        {
-            result.addError(new ObjectError("user", "Error happens"));
-        }
-        return "redirect:/";
+        return getModelAndView(userForView);
     }
 
 }

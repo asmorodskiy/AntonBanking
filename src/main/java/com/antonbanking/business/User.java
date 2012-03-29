@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -30,7 +29,8 @@ public class User
     @Column(name = "name")
     private String name;
 
-    @NotNull
+    @Size(min = 3, max = 20, message = "Password must be between 3 and 20 characters long")
+    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Password must be alphanumeric with no spaces")
     @Column(name = "password")
     private String password;
 

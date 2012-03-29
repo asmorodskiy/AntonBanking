@@ -12,7 +12,7 @@
  <security:http auto-config="false" use-expressions="true" access-denied-page="/denied"
    entry-point-ref="authenticationEntryPoint" >
   
-  <security:intercept-url pattern="/**" access="isAuthenticated()" />  
+  <security:intercept-url pattern="/*" access="isAuthenticated()" />  
     
   <security:logout
     invalidate-session="true"
@@ -28,7 +28,7 @@
    
   <!-- Custom filter for username and password. The real customization is done in the customAthenticationManager -->
   <bean id="authenticationFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter"
-    p:authenticationManager-ref="AuthService"
+    p:authenticationManager-ref="customAuthenticationManager"
     p:authenticationFailureHandler-ref="customAuthenticationFailureHandler"
     p:authenticationSuccessHandler-ref="customAuthenticationSuccessHandler" />
      

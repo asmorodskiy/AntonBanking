@@ -21,8 +21,6 @@ import com.antonbanking.hibernate.UserDB;
  * throw a {@link BadCredentialsException}
  */
 
-/// http://krams915.blogspot.com/2010/12/spring-security-mvc-integration-using_26.html
-
 public class AuthService implements AuthenticationManager
 {
     // We need an Md5 encoder since our passwords in the database are Md5 encoded. 

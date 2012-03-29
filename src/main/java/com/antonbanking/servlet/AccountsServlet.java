@@ -19,32 +19,45 @@ import com.antonbanking.service.MainService;
 
 @Controller
 @SessionAttributes
-public class AccountsServlet {
+public class AccountsServlet
+{
+
+    private ModelAndView getModelAndView(Account account, HttpSession session, int userID)
+    {
+        ArrayList<String> to_jsp = new ArrayList<String>();
+        CurrencyType[] currency_arr = CurrencyType.values();
+        for (CurrencyType val1 : currency_arr)
+            to_jsp.add(val1.getName());
+        String usr_name = MainService.getUserName(userID);
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("accounts");
+        mav.addObject("ATMAccounts", MainService.getAllAccounts(userID));
+        mav.addObject("ATMCurrencyTypes", to_jsp);
+        mav.addObject("ATMUserName", usr_name);
+        session.setAttribute("HiddenUserID", userID);
+        mav.addObject("account", account);
+        return mav;
+    }
+
     @RequestMapping(value = "/AccountsServlet/{userID}", method = RequestMethod.GET)
-    public ModelAndView showAccounts(@PathVariable int userID,
-	    HttpSession session) {
-	ArrayList<String> to_jsp = new ArrayList<String>();
-	CurrencyType[] currency_arr = CurrencyType.values();
-	for (CurrencyType val1 : currency_arr)
-	    to_jsp.add(val1.getName());
-	String usr_name = MainService.getUserName(userID);
-	ModelAndView mav = new ModelAndView();
-	mav.setViewName("accounts");
-	mav.addObject("ATMAccounts", MainService.getAllAccounts(userID));
-	mav.addObject("ATMCurrencyTypes", to_jsp);
-	mav.addObject("ATMUserName", usr_name);
-	session.setAttribute("HiddenUserID", userID);
-	mav.addObject("account", new Account());
-	return mav;
+    public ModelAndView showAccounts(@PathVariable int userID, HttpSession session)
+    {
+        return getModelAndView(new Account(), session, userID);
     }
 
     @RequestMapping(value = "/AccountsServlet/AddAccountServlet", method = RequestMethod.POST)
-    public String AddAccount(@ModelAttribute("account") Account account,
-	    BindingResult result, HttpSession session) {
-	MainService.AddAccount(session.getAttribute("HiddenUserID").toString(),
-		account);
-	return String.format("redirect:/AccountsServlet/%s", session
-		.getAttribute("HiddenUserID").toString());
+    public ModelAndView AddAccount(@ModelAttribute("account") Account account, BindingResult result, HttpSession session)
+    {
+
+        Account accountForView;
+        if (result.hasErrors())
+            accountForView = account;
+        else
+        {
+            accountForView = new Account();
+            MainService.AddAccount(session.getAttribute("HiddenUserID").toString(), account);
+        }
+        return getModelAndView(accountForView, session, Integer.valueOf(session.getAttribute("HiddenUserID").toString()));
     }
 
 }

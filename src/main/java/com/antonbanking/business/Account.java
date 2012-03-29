@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -21,6 +22,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class Account
 {
 
+    @Min(value = 0, message = "Quantity can not be negative (OverDraft not available )")
     @Column(name = "quantity")
     private double quantity;
 

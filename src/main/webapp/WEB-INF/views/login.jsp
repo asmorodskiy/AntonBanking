@@ -17,49 +17,23 @@
 <title>Anton Banking Inc</title>
 </head>
 <body>
-	<c:if test="${error != null }">
-		<h1 size="23" color="red">Shit happens</h1>
-	</c:if>
-	<form:form method="post" action="AddUser" modelAttribute="user">
-		<table>
-			<tr>
-				<td><form:errors path="*" /></td>
-			</tr>
-			<tr>
+	<h1>Login</h1>	
+	<form:form action="/auth/login" method="post" modelAttribute="user">
+<table>
+	<tr>
 				<td><form:label path="name">First Name</form:label></td>
-				<td><form:input path="name" /></td>				
+				<td><form:input path="name" /></td>
+				<td><form:errors path="*" /></td>
 			</tr>
 			<tr>
 				<td><form:label path="password">User Password</form:label></td>
 				<td><form:password path="password" /></td>				
 			</tr>
 			<tr>
-				<td colspan="2"><input type="submit" value="Add User" /></td>
-			</tr>
-		</table>
-	</form:form>
-	<DIV>
-		<h1 align="center">List of Users</h1>
-		<table id="UserList" cellspacing="0" cellpadding="0" border="1"
-			align="center">
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Name</th>
-				</tr>
-			</thead>
-			<TBODY>
-				<c:forEach items="${ATMUsers}" var="user">
-					<tr>
-						<td><a
-							href="/AntonBanking/AccountsServlet/${user.userID}"><c:out
-									value="${user.userID}" /></a></td>
-						<td><c:out value="${user.name}" /></td>
-					</tr>
-				</c:forEach>
-			</TBODY>
-		</table>
-	</DIV>
+				<td colspan="2"><input type="submit" value="Login" /></td>
+	</tr>								
+	</table>
+</form:form>
 </body>
 	</html>
 </jsp:root>
